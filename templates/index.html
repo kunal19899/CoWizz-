@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2ZHW5H95M1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+    gtag('config', 'G-2ZHW5H95M1');
+    </script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="COVID-19 Data Analysis and Visualization using Multilayer Networks at the Information Technology Lab in the Department of Computer Science and Engineering at The University of Texas at Arlington">
+        <meta name="author" content="Information Technology Laboratory (ITLab) at UT Arlington">
+        <meta name="generator" content="Jekyll v4.1.1">
+        <title> COVID-19 Data Analytics | ITLab </title>
+
+        <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/cover/">
+
+        <!-- Bootstrap core CSS -->
+
+        <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon" />
+            <!-- Favicons -->
+        <link rel="apple-touch-icon" href="/docs/4.5/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+        <link rel="icon" href="/docs/4.5/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+        <link rel="icon" href="/docs/4.5/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+        <link rel="mask-icon" href="/docs/4.5/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
+        <link rel="icon" href="/docs/4.5/assets/img/favicons/favicon.ico">
+        <meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
+        <meta name="theme-color" content="#563d7c">
+       
+        <!-- CSS and JS from Bootstrap required  -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+       <!------------------------------------------>
+
+
+        <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+            }
+        }
+        .img-height-auto{
+            height: auto;
+        }
+
+        .bootstrap-select .bs-ok-default::after {
+            width: 0.3em;
+            height: 0.6em;
+            border-width: 0 0.1em 0.1em 0;
+            transform: rotate(45deg) translateY(0.5rem);
+        }
+
+        .btn.dropdown-toggle:focus {
+            outline: none !important;
+        }
+        
+        </style>
+        <script type='text/javascript'>
+	   
+            function toBorderDark(id){
+                document.getElementById(id).classList.remove('border-danger');
+            }
+
+            function adjust_min_of_2nd_period(){
+                if ((document.getElementById('start_of_startDate').value != '')){
+                    var vals = document.getElementById('start_of_startDate').value.split('-');
+                    var year = vals[0];
+                    var month = vals[1];
+                    var day = vals[2];
+                    var date = new Date(year, month-1, day);
+                    date.setDate(date.getDate() + parseInt(document.getElementById('periodLength').value));
+                    var month = parseInt(date.getMonth())+1
+                    if (month < 10){
+                        month = 0+month.toString();
+                    }
+                    var exactDate = date.getDate();
+                    if (exactDate < 10){
+                        exactDate = 0+exactDate.toString();
+                    }
+                    var x = document.getElementById('start_of_endDate').min = date.getFullYear() + "-" + month + "-" + exactDate;
+                }
+            }
+            
+            function monthName(m){
+                if (m == '01')
+                    return "Jan";
+                if (m == '02')
+                    return "Feb";
+                if (m == '03')
+                    return "Mar";
+                if (m == '04')
+                    return "Apr";
+                if (m == '05')
+                    return "May";
+                if (m == '06')
+                    return "Jun";
+                if (m == '07')
+                    return "Jul";
+                if (m == '08')
+                    return "Aug";
+                if (m == '09')
+                    return "Sep";
+                if (m == '10')
+                    return "Oct";
+                if (m == '11')
+                    return "Nov";
+                if (m == '12'){
+                    return "Dec";
+                }
+                if (m == 'Jan'){
+                    return "01";
+                }
+                if (m == 'Feb'){
+                    return "02";
+                }
+                if (m == 'Mar'){
+                    return "03";
+                }
+                if (m=="Apr"){
+                    return "04";
+                }
+                if (m=="Jun"){
+                    return "06";
+                }
+                if (m=='Jul'){
+                    return "07";
+                }
+                if (m == 'Aug'){
+                    return "08";
+                }
+                if (m == "Sep"){
+                    return "09";
+                }
+                if (m == "Oct"){
+                    return "10";
+                }
+                if (m == "Nov"){
+                    return "11";
+                }
+                if (m == "Dec"){
+                    return "12";
+                }
+            }
+
+            function set_max_date(){
+                // ASantra (12/7): Adjusting based on user's local time
+                var now = new Date();
+                var utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+                var today = new Date(utc.getTime() - 660 * 60000); // converting to current time in CDT (updates at 5am CDT)
+
+                var end = new Date();
+                
+                end.setDate(today.getDate() - (parseInt(document.getElementById('periodLength').value)));
+                var date = end.getFullYear()+'-'+(end.getMonth()+1)+'-'+end.getDate();
+                var vals = date.split('-');
+                var year = vals[0];
+                var month = vals[1];
+                var day = vals[2];
+                if (month < 10){
+                    month = 0+month.toString();
+                }
+                if (day < 10){
+                    day = 0+day.toString();
+                }
+                var date = year +'-'+ month +'-'+ day;
+                var maxEndDate = document.getElementById('start_of_endDate').max = date; 
+                
+                var start = new Date();
+                start.setDate(today.getDate() - 2*(parseInt(document.getElementById('periodLength').value)));
+                date = start.getFullYear()+'-'+(start.getMonth()+1)+'-'+start.getDate();
+                vals = date.split('-');
+                year = vals[0];
+                month = vals[1];
+                day = vals[2];
+                console.log(vals);
+                console.log(vals[2]);
+                console.log(day);
+                if (month < 10){
+                    month = 0+month.toString();
+                }
+                if (day < 10){
+                    day = 0+day.toString();
+                }
+                date = year +'-'+ month +'-'+ day;
+                var maxStartDate = document.getElementById('start_of_startDate').max = date;
+                console.log(maxStartDate);
+            }
+
+            function enable_2nd_calander(){
+                if ((document.getElementById('start_of_startDate').value != '') && (document.getElementById('periodLength').value != 0)){
+                    document.getElementById('start_of_endDate').disabled = false;
+                }
+
+                if ((document.getElementById('periodLength').value == 0) || (document.getElementById('start_of_startDate').value == '')){
+                    document.getElementById('start_of_endDate').disabled = true;
+                }
+            }
+
+            function enable_1st_calander(){
+                if (document.getElementById('periodLength').value == 0){
+                    document.getElementById('start_of_startDate').disabled = true;
+                }
+                else{
+                    document.getElementById('start_of_startDate').disabled = false;
+                }
+            }
+
+            function enableSubmit(){
+                console.log(document.getElementById('interval').value); 
+                if (document.getElementById('periodLength').value == 0){
+                    document.getElementById('submit').disabled = true;
+                }
+                else if((document.getElementById('start_of_startDate').value == '') || (document.getElementById('start_of_endDate').value == '')){
+                    document.getElementById('submit').disabled = true;
+                }
+                else if (document.getElementById('interval').value == 0){
+                                   document.getElementById('submit').disabled = true;}
+                else {
+                    document.getElementById('submit').disabled = false;
+                }
+            }
+
+            function setEnd(id){
+                if (id == 'start_of_startDate'){
+                    var vals = document.getElementById('start_of_startDate').value.split('-');
+                }
+                else if (id == 'start_of_endDate'){
+                    var vals = document.getElementById('start_of_endDate').value.split('-');
+                    var endOfStart = document.getElementById('end_of_startDate').innerHTML.split('-');
+                    // console.log(document.getElementById('end_of_startDate').innerHTML);
+                    var endOfStartDate = new Date(endOfStart[2], monthName(endOfStart[1])-1, endOfStart[0]);
+                }
+                    var year = vals[0];
+                    var month = vals[1];
+                    var day = vals[2];
+                    var date = new Date(year, month-1, day);
+                    var dateTemp = new Date(year, month-1, day);
+
+                    // end date 
+                    date.setDate(date.getDate() + parseInt(document.getElementById('periodLength').value)-1);
+                    var month = parseInt(date.getMonth())+1
+                    if (month < 10){
+                        month = 0+month.toString();
+                    }
+                    var exactDate = date.getDate();
+                    if (exactDate < 10){
+                        exactDate = 0+exactDate.toString();
+                    }
+
+                    // ASantra (11/20): check if generated date is >= (INVALID) or < (VALID) compared to today's date
+                    // ASantra (12/7): Adjusting based on user's local time
+                    var now = new Date();
+                    var utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+                    var today = new Date(utc.getTime() - 660 * 60000); // converting to current time in CDT
+
+                    // var today = new Date();
+                    var todayTemp = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+                    if (date>=todayTemp){
+                        // Beyond today's date => RESET
+                        if (id == 'start_of_startDate'){
+                            var x = document.getElementById('start_of_startDate').value = '';
+                            var y = document.getElementById('end_of_startDate').innerHTML = '-';
+                            enableSubmit(); // new update
+                        }
+                        else if (id == 'start_of_endDate'){
+                            var x = document.getElementById('start_of_endDate').value = '';
+                            var y = document.getElementById('end_of_endDate').innerHTML = '-';
+                            enableSubmit(); // new update
+                        }
+                    }
+                    else if (id == 'start_of_endDate' && dateTemp <= endOfStartDate){
+                            // ASantra (12/2): If the period change leads to a case where start of end date is beyond or equal to the updated end of start date
+                            var x = document.getElementById('start_of_endDate').value = '';
+                            var y = document.getElementById('end_of_endDate').innerHTML = '-';
+                            enableSubmit(); // new update                        
+                    }
+                    else {
+                        // Valid end date => UPDATE
+                        if (id == 'start_of_startDate'){
+                            var x = document.getElementById('end_of_startDate').innerHTML =  exactDate + "-" + monthName(month) + "-" +date.getFullYear();
+                        }
+                        else if (id == 'start_of_endDate'){
+                            var x = document.getElementById('end_of_endDate').innerHTML = exactDate + "-" + monthName(month) + "-" +date.getFullYear();
+                        }    
+                    }
+                    
+                    
+                
+            }
+
+            function resetDates(id){
+                if (id != 'start_of_startDate'){
+                    
+                    if (id == 'start_of_endDate'){
+                        var vals = document.getElementById('end_of_startDate').innerHTML.split('-');
+                        var vals_end = document.getElementById('start_of_endDate').value.split('-');
+
+                        var date = new Date(vals[2], parseInt(monthName(vals[1]))-1, vals[0]);
+                        var date_end = new Date(vals_end[0], parseInt(vals_end[1])-1, vals_end[2]);
+
+                        if (date >= date_end){
+                            var x = document.getElementById('start_of_startDate').value = '';
+                            var y = document.getElementById('end_of_startDate').innerHTML = '-';
+                            enableSubmit(); // new update
+                        }
+                    }
+
+                }
+                if (id != 'start_of_endDate'){
+                    
+                    if (id == 'start_of_startDate'){
+                        var vals = document.getElementById('end_of_startDate').innerHTML.split('-');
+                        var vals_end = document.getElementById('start_of_endDate').value.split('-');
+
+                        var date = new Date(vals[2], parseInt(monthName(vals[1]))-1, vals[0]);
+                        var date_end = new Date(vals_end[0], parseInt(vals_end[1])-1, vals_end[2]);
+
+                        if (date >= date_end){
+                            var x = document.getElementById('start_of_endDate').value = '';
+                            var y = document.getElementById('end_of_endDate').innerHTML = '-';
+                            enableSubmit(); // new update
+                        }
+                    }
+                }
+
+                if (id == 'periodLength'){
+                       if (document.getElementById('start_of_startDate').value != '')
+                            setEnd('start_of_startDate');
+                            
+                       if (document.getElementById('start_of_endDate').value != '')
+                            setEnd('start_of_endDate');   
+                }
+            }
+        </script>
+
+        <!-- Custom styles for this template -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+        <!-- CSS only -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+        <!-- JS, Popper.js, and jQuery -->
+        
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+ 
+ 
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    </head>
+
+    <body class="text-center" onload="set_max_date(); enable_2nd_calander();">
+        <header class="bg-white" style="margin-top: 5px; margin-bottom: 5px;">
+            <a href="https://www.uta.edu" target="_blank"><img id="uta_logo" src="{{ url_for('static', filename='imgs/uta-logo-v2.png') }}" class="rounded float-left" style="margin-left: 15px;"></a>
+            <a href="https://itlab.uta.edu/" target="_blank"><img id="itlab_logo" src="{{ url_for('static', filename='imgs/itlab-logo-v2.png') }}" class="rounded float-right" style="margin-right: 15px;"></a>
+            <a href="https://itlab.uta.edu/cowiz/"><img id="center" src="{{ url_for('static', filename='imgs/web-images-1/header-2.png') }}" class="rounded mx-auto d-block img-height-auto"></a>
+        </header>
+        
+        <main class="container-fluid" style="width: 100%; font-size:1.2vw">
+			<div class="" style="width:100%; ">
+				
+				<div class="border border-dark text-light container-fluid float-left" style="margin-top: 0; width: 18.5%; height: 2.3vw; border-radius: 0px; background-color:#008DC9;">
+					<p style="margin-top:0.15vw">Cumulative <strong>WHO</strong> Update</p>
+				</div>
+				
+				<div class="border border-dark float-right container-fluid" style="margin-top: 0; width: 81.5%; height: 2.3vw; border-radius: 0px;">
+					<!-- <marquee scrolldelay="10"> -->
+                    <span style="color:black;"><strong>WORLD:</strong></span> <span style="color:#ED7D31;">
+					<strong> <span id="WorldCases"></span></strong></span> | <strong><span style="color:red"><span id="WorldDeath"></span></span></strong> <img src="static/imgs/images/covid-logo.png" height="18vw"> <span style="color:black;"><strong>USA:</strong></span> <span style="color:#ED7D31;">
+                    <strong> <span id="USCases"></span></strong></span> | <strong><span style="color:red"><span id="USDeaths"></span></span></strong> <em>(As of <span id="lastUpdate"></span> )</em>
+                <!-- </marquee> -->
+				</div>
+            </div>
+            <br/>
+            <br/>
+
+
+            
+
+            <!-----------------------Edit the input bar here -------------------------------->
+            <div class="container-fluid ">
+                <div class="card-group bg-secondary p-3">
+                    <form class="container-fluid" action="" method="POST" novalidate> <!--connect form to "animate"
+                         function on this line-->
+                        
+                            <button class="card btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Select upto 5 states...
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1" >
+                                <!--enter state information here as a dropdown-->
+                                
+                            </div>
+                        
+
+                        <select id="feature1" class="card btn btn-light m-2" name="feature1">
+                            <!--enter feature 1 information here-->
+
+                        </select>
+
+                        <select id="feature2" class="card btn btn-light m-2" name="feature2">
+                            <!--enter feature 2 information here-->
+
+                        </select>
+                        <!-- add a submit button here-->
+
+                        <!----------------------------->
+                    </form>
+                </div>
+            </div>
+            <!-------------------------------------------------------------------------->
+        
+        
+            
+            <!-- Insert Iframe here  -->
+            
+            <!------------------------->
+            
+   
+        </main> 
+        <br/>
+	<div class='container-fluid' style="margin-top:2vw; margin-bottom: 1vw; height:40px; font-size:1.2vw">
+                <!-- <div class="  card float-left"> -->
+
+                
+                    <div class="border border-dark card text-light bg-secondary container-fluid float-left" style="width: 13%;  height: 2.3vw; border-radius: 0px; background-color:#FFF7DD; margin-left:15px">
+                        <p style="margin-top:0.15vw">Data Sources</p>
+                    </div>
+                    <div class="container-fluid float-left" style="width: 6%;  height: 2.1vw; border-radius: 0px;">
+                        <a href="" target="_blank"><img src="{{ url_for('static', filename='imgs/web-images-1/datasource-bts.png') }}" height="30px" style=""></a>
+                    </div>
+                    <div class="container-fluid float-left" style="width: 6%;  height: 2.1vw; border-radius: 0px;">
+                        <a href="" target="_blank"><img src="{{ url_for('static', filename='imgs/web-images-1/datasource-cdc.png') }}" height="30px" style=""></a>
+                    </div>
+                    <div class="container-fluid float-left" style="width: 6%;  height: 2.1vw; border-radius: 0px;">
+                        <a href="" target="_blank"><img src="{{ url_for('static', filename='imgs/web-images-1/datasource-google.png') }}" height="30px" style=""></a>
+                    </div>
+                    <div class="container-fluid float-left" style="width: 6%;  height: 2.1vw; border-radius: 0px;">
+                        <a href="" target="_blank"><img src="{{ url_for('static', filename='imgs/web-images-1/datasource-owid.png') }}" height="30px" style=""></a>
+                    </div>
+                    <div class="border border-dark card text-light bg-secondary container-fluid float-left" style="width: 12%;  height: 2.3vw; border-radius: 0px; background-color:#FFF7DD; margin-left:-20px">
+                        <p style="margin-top:0.15vw">Funding Sources</p>
+                    </div>
+    
+                    <div class="container-fluid float-left" style="width: 6%;  height: 2.2vw; border-radius: 0px;">		
+                        <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=1955798&HistoricalAwards=false" target="_blank"><img src="{{ url_for('static', filename='imgs/images/nsf-logo-v2.png') }}" height="40px" style="margin-top:-5px; margin-left:-20px"></a>
+                    </div>
+                    
+                    <div class="border border-dark card text-light bg-secondary container-fluid float-left" style="width: 12%;  height: 2.3vw; border-radius: 0px; background-color:#FFF7DD; margin-left:10px">
+                        <p style="margin-top:0.15vw">Visitor Count</p>
+                    </div>
+
+                    <div class="container-fluid float-left" style="width: 6%;  height: 2.2vw; border-radius: 0px;">		
+                        <!-- Start of WebFreeCounter Code -->
+                        <a href="https://www.webfreecounter.com/" target="_blank"><img src="https://www.webfreecounter.com/hit.php?id=gfccca&nd=6&style=31" border="0" alt="hit counter"></a>
+                        <!-- End of WebFreeCounter Code -->
+                    </div>
+
+                <div class="card container-fluid float-left" style="width: 11%;  height: 2.3vw; border-radius: 0px; border-color: #FFFFFF; margin-left:100px; margin-top:-5px">
+                    <button type="button" class="btn btn-info" onclick="window.open('mailto:itlab.cse.uta@gmail.com')">Feedback</button>
+                </div>
+
+                    
+    </div>
+        <hr class="" color="black" style="height: 0px; margin-bottom: 0; margin-top: 0vw;"/>
+        
+        <div style="background-color:#002463;" class=" p-2 container-fluid" style="font-size:1.1vw">
+            <p class="float-left text-light"><a href="https://www.linkedin.com/in/abhishek-santra/" target="_blank"  style="color:white">Abhishek Santra</a> | <a href="https://linkedin.com/in/kunalsamant" target="_blank"  style="color:white">Kunal Samant</a> | <a href="https://www.linkedin.com/in/enamul17/" target="_blank"  style="color:white">Enamul Karim</a> | <a href="https://www.linkedin.com/in/endrit-m/" target="_blank"  style="color:white">Endrit Memeti</a> | <a href="http://itlab.uta.edu/index.html" target="_blank"  style="color:white">Sharma Chakravarthy</a> | <a href="mailto:itlab.cse.uta@gmail.com" target="_blank"><img src="{{url_for('static', filename='imgs/images/email.png')}}" height=17px></a></p>
+            <p class="float-right text-light">
+			&copy; 2021 The University of Texas at Arlington </p>
+            <br/>
+        </div>
+		<div align="center" hidden="hidden">
+		 <button type="button" name="load_data" id="load_data" hidden="hidden" class="btn btn-info">Load Data</button>
+		</div>
+    </body>
+</html>
+
+<script>
+$(document).ready(function(){
+$(function() {
+    $('#load_data').click();
+});
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+var xhReq = new XMLHttpRequest();
+xhReq.open("HEAD", "static/WHO/WHO-COVID-19-global-data.csv", false);
+xhReq.send(null);
+var lastModified = xhReq.getResponseHeader("Last-Modified");
+
+
+var d = new Date();
+var month = d.getMonth()+1;
+var pday = d.getDate()-1;
+var day = d.getDate();
+var date = d.getFullYear() + '-' +
+    (month<10 ? '0' : '') + month + '-' +
+    (day<10 ? '0' : '') + day;
+ 
+	
+ $('#load_data').click(function(){
+  
+  $.ajax({   
+   url:"static/WHO/WHO-COVID-19-global-data.csv",
+   dataType:"text",
+   success:function(data)
+   {
+   var globalCase=0, globalDeath=0, USCases=0, USDeaths=0;
+   var covid_data = data.split(/\r?\n|\r/);
+
+    // ASantra (1/3/21): Modified by Adding only the NEW_CASES and NEW_DEATHS
+   for(var count = 1; count<covid_data.length-1; count++)
+    {
+         var cell_data = covid_data[count].match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+         cell_data = cell_data || [];
+		 if(cell_data[1]=="US"){
+		     USCases=USCases+parseInt(cell_data[4]);
+		     USDeaths=USDeaths+parseInt(cell_data[6]);
+		   }
+		   globalCase=globalCase+parseInt(cell_data[4]);
+		   globalDeath=globalDeath+parseInt(cell_data[6]);
+    
+    }
+console.log(globalCase);
+   
+ 
+	$('#WorldCases').html(numberWithCommas(globalCase)+" Cases");
+	$('#WorldDeath').html(numberWithCommas(globalDeath)+" Deaths");
+console.log(USCases);
+	$('#USCases').html(numberWithCommas(USCases)+" Cases");
+	$('#USDeaths').html(numberWithCommas(USDeaths)+" Deaths");
+
+	$('#lastUpdate').html(lastModified+"");
+
+       
+    
+   }
+      
+  });
+ });
+ 
+});
+</script>
+

@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2ZHW5H95M1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+    gtag('config', 'G-2ZHW5H95M1');
+    </script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="COVID-19 Data Analysis and Visualization using Multilayer Networks at the Information Technology Lab in the Department of Computer Science and Engineering at The University of Texas at Arlington">
+        <meta name="author" content="Information Technology Laboratory (ITLab) at UT Arlington">
+        <meta name="generator" content="Jekyll v4.1.1">
+        <title> COVID-19 Data Analytics | ITLab </title>
+
+        <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/cover/">
+
+        <!-- Bootstrap core CSS -->
+        <link href="/docs/4.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+        <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon" />
+            <!-- Favicons -->
+        <link rel="apple-touch-icon" href="/docs/4.5/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+        <link rel="icon" href="/docs/4.5/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+        <link rel="icon" href="/docs/4.5/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+        <link rel="manifest" href="/docs/4.5/assets/img/favicons/manifest.json">
+        <link rel="mask-icon" href="/docs/4.5/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
+        <link rel="icon" href="/docs/4.5/assets/img/favicons/favicon.ico">
+        <meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
+        <meta name="theme-color" content="#563d7c">
+       
+
+        <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+            }
+        }
+        .img-height-auto{
+            height: auto;
+        }
+
+        </style>
+        <script>
+	   
+            function toBorderDark(id){
+                document.getElementById(id).classList.remove('border-danger');
+            }
+
+            function adjust_min_of_2nd_period(){
+                if ((document.getElementById('start_of_startDate').value != '')){
+                    var vals = document.getElementById('start_of_startDate').value.split('-');
+                    var year = vals[0];
+                    var month = vals[1];
+                    var day = vals[2];
+                    var date = new Date(year, month-1, day);
+                    date.setDate(date.getDate() + parseInt(document.getElementById('periodLength').value));
+                    var month = parseInt(date.getMonth())+1
+                    if (month < 10){
+                        month = 0+month.toString();
+                    }
+                    var exactDate = date.getDate();
+                    if (exactDate < 10){
+                        exactDate = 0+exactDate.toString();
+                    }
+                    var x = document.getElementById('start_of_endDate').min = date.getFullYear() + "-" + month + "-" + exactDate;
+                }
+            }
+            
+            function monthName(m){
+                if (m == '01')
+                    return "Jan";
+                if (m == '02')
+                    return "Feb";
+                if (m == '03')
+                    return "Mar";
+                if (m == '04')
+                    return "Apr";
+                if (m == '05')
+                    return "May";
+                if (m == '06')
+                    return "Jun";
+                if (m == '07')
+                    return "Jul";
+                if (m == '08')
+                    return "Aug";
+                if (m == '09')
+                    return "Sep";
+                if (m == '10')
+                    return "Oct";
+                if (m == '11')
+                    return "Nov";
+                if (m == '12'){
+                    return "Dec";
+                }
+                if (m == 'Jan'){
+                    return "01";
+                }
+                if (m == 'Feb'){
+                    return "02";
+                }
+                if (m == 'Mar'){
+                    return "03";
+                }
+                if (m=="Apr"){
+                    return "04";
+                }
+                if (m=="Jun"){
+                    return "06";
+                }
+                if (m=='Jul'){
+                    return "07";
+                }
+                if (m == 'Aug'){
+                    return "08";
+                }
+                if (m == "Sep"){
+                    return "09";
+                }
+                if (m == "Oct"){
+                    return "10";
+                }
+                if (m == "Nov"){
+                    return "11";
+                }
+                if (m == "Dec"){
+                    return "12";
+                }
+            }
+
+            function set_max_date(){
+                var today = new Date();
+
+                var end = new Date();
+                
+                end.setDate(today.getDate() - (parseInt(document.getElementById('periodLength').value)));
+                var date = end.getFullYear()+'-'+(end.getMonth()+1)+'-'+end.getDate();
+                var vals = date.split('-');
+                var year = vals[0];
+                var month = vals[1];
+                var day = vals[2];
+                if (month < 10){
+                    month = 0+month.toString();
+                }
+                if (day < 10){
+                    day = 0+day.toString();
+                }
+                var date = year +'-'+ month +'-'+ day;
+                var maxEndDate = document.getElementById('start_of_endDate').max = date; 
+                
+                var start = new Date();
+                start.setDate(today.getDate() - 2*(parseInt(document.getElementById('periodLength').value)));
+                date = start.getFullYear()+'-'+(start.getMonth()+1)+'-'+start.getDate();
+                vals = date.split('-');
+                year = vals[0];
+                month = vals[1];
+                day = vals[2];
+                console.log(vals);
+                console.log(vals[2]);
+                console.log(day);
+                if (month < 10){
+                    month = 0+month.toString();
+                }
+                if (day < 10){
+                    day = 0+day.toString();
+                }
+                date = year +'-'+ month +'-'+ day;
+                var maxStartDate = document.getElementById('start_of_startDate').max = date;
+                console.log(maxStartDate);
+            }
+
+            function enable_2nd_calander(){
+                if ((document.getElementById('start_of_startDate').value != '') && (document.getElementById('periodLength').value != 0)){
+                    document.getElementById('start_of_endDate').disabled = false;
+                }
+
+                if ((document.getElementById('periodLength').value == 0) || (document.getElementById('start_of_startDate').value == '')){
+                    document.getElementById('start_of_endDate').disabled = true;
+                }
+            }
+
+            function enable_1st_calander(){
+                if (document.getElementById('periodLength').value == 0){
+                    document.getElementById('start_of_startDate').disabled = true;
+                }
+                else{
+                    document.getElementById('start_of_startDate').disabled = false;
+                }
+            }
+
+            function enableSubmit(){
+console.log(document.getElementById('interval').value); 
+ if (document.getElementById('periodLength').value == 0){
+                    document.getElementById('submit').disabled = true;
+                }
+                else if((document.getElementById('start_of_startDate').value == '') || (document.getElementById('start_of_endDate').value == '')){
+                    document.getElementById('submit').disabled = true;
+                }
+                else if (document.getElementById('interval').value == 0){
+                                   document.getElementById('submit').disabled = true;}
+                else {
+                    document.getElementById('submit').disabled = false;
+                }
+            }
+
+            function setEnd(id){
+                if (id == 'start_of_startDate'){
+                    var vals = document.getElementById('start_of_startDate').value.split('-');
+                }
+                else if (id == 'start_of_endDate'){
+                    var vals = document.getElementById('start_of_endDate').value.split('-');
+                }
+                    var year = vals[0];
+                    var month = vals[1];
+                    var day = vals[2];
+                    var date = new Date(year, month-1, day);
+                    // end date 
+                    date.setDate(date.getDate() + parseInt(document.getElementById('periodLength').value)-1);
+                    var month = parseInt(date.getMonth())+1
+                    if (month < 10){
+                        month = 0+month.toString();
+                    }
+                    var exactDate = date.getDate();
+                    if (exactDate < 10){
+                        exactDate = 0+exactDate.toString();
+                    }
+
+                    // ASantra (11/20): check if generated date is >= (INVALID) or < (VALID) compared to today's date
+                    var today = new Date();
+
+                    console.log(date>=today);
+                    console.log(date<today);
+                    if (date>=today){
+                        // Beyond today's date => RESET
+                        if (id == 'start_of_startDate'){
+                            var x = document.getElementById('start_of_startDate').value = '';
+                            var y = document.getElementById('end_of_startDate').innerHTML = '-';
+                            enableSubmit(); // new update
+                        }
+                        else if (id == 'start_of_endDate'){
+                            var x = document.getElementById('start_of_endDate').value = '';
+                            var y = document.getElementById('end_of_endDate').innerHTML = '-';
+                            enableSubmit(); // new update
+                        }
+                    }
+                    else if (date < today){
+                        // Valid end date => UPDATE
+                        if (id == 'start_of_startDate'){
+                            var x = document.getElementById('end_of_startDate').innerHTML =  exactDate + "-" + monthName(month) + "-" +date.getFullYear();
+                        }
+                        else if (id == 'start_of_endDate'){
+                            var x = document.getElementById('end_of_endDate').innerHTML = exactDate + "-" + monthName(month) + "-" +date.getFullYear();
+                        }    
+                    }
+                    
+                    
+                
+            }
+
+            function resetDates(id){
+                if (id != 'start_of_startDate'){
+                    
+                    if (id == 'start_of_endDate'){
+                        var vals = document.getElementById('end_of_startDate').innerHTML.split('-');
+                        var vals_end = document.getElementById('start_of_endDate').value.split('-');
+
+                        var date = new Date(vals[2], parseInt(monthName(vals[1]))-1, vals[0]);
+                        var date_end = new Date(vals_end[0], parseInt(vals_end[1])-1, vals_end[2]);
+
+                        if (date >= date_end){
+                            var x = document.getElementById('start_of_startDate').value = '';
+                            var y = document.getElementById('end_of_startDate').innerHTML = '-';
+                            enableSubmit(); // new update
+                        }
+                    }
+
+                }
+                if (id != 'start_of_endDate'){
+                    
+                    if (id == 'start_of_startDate'){
+                        var vals = document.getElementById('end_of_startDate').innerHTML.split('-');
+                        var vals_end = document.getElementById('start_of_endDate').value.split('-');
+
+                        var date = new Date(vals[2], parseInt(monthName(vals[1]))-1, vals[0]);
+                        var date_end = new Date(vals_end[0], parseInt(vals_end[1])-1, vals_end[2]);
+
+                        if (date >= date_end){
+                            var x = document.getElementById('start_of_endDate').value = '';
+                            var y = document.getElementById('end_of_endDate').innerHTML = '-';
+                            enableSubmit(); // new update
+                        }
+                    }
+                }
+
+                if (id == 'periodLength'){
+                       if (document.getElementById('start_of_startDate').value != '')
+                            setEnd('start_of_startDate');
+                            
+                       if (document.getElementById('start_of_endDate').value != '')
+                            setEnd('start_of_endDate');
+                        // ASantra(11/20): Code for updating dates once new period selected in setEnd()
+                        
+                       
+                       
+                       /*var vals = document.getElementById('start_of_startDate').value.split('-');
+                       var vals_end = document.getElementById('start_of_endDate').value.split('-');
+
+                       var date= new Date(vals[0], parseInt(vals[1])-1, vals[2]);
+                       var date_end = new Date(vals_end[0], parseInt(vals_end[1])-1, vals_end[2]);
+
+                       date.setDate(date.getDate() + parseInt(document.getElementById('periodLength').value));
+                       if (date >= date_end){
+                           var x = document.getElementById('start_of_startDate').value = '';
+                           var y = document.getElementById('end_of_startDate').innerHTML = '-';
+                           var z = document.getElementById('start_of_endDate').value = '';
+                           var a = document.getElementById('end_of_endDate').innerHTML = '-';
+                           enableSubmit(); // new update
+                       }
+                       else{
+                        //    if (date != null)
+                                setEnd('start_of_startDate');
+                            // if (date_end != null)
+                                setEnd('start_of_endDate');
+                       }
+                        
+                        var vals_start = document.getElementById('start_of_startDate').value.split('-');
+                        var vals_end = document.getElementById('start_of_endDate').value.split('-');
+                        var today = new Date();
+
+                        var date_start = new Date(vals_start[2], parseInt(monthName(vals_start[1]))-1, vals_start[0]);
+                        date_start.setDate(date_start.getDate() + parseInt(document.getElementById('periodLength').value));
+                        
+                        if (date_start>=today.getDate()){
+                            var x = document.getElementById('start_of_startDate').value = '';
+                            var y = document.getElementById('end_of_startDate').innerHTML = '-';
+                            enableSubmit(); // new update
+                        }
+
+                        var date_end = new Date(vals_end[2], parseInt(monthName(vals_end[1]))-1, vals_end[0]);
+                        date_end.setDate(date_end.getDate() + parseInt(document.getElementById('periodLength').value));
+                        if (date_end >= today.getDate()){
+                            var z = document.getElementById('start_of_endDate').value = '';
+                            var a = document.getElementById('end_of_endDate').innerHTML = '-';
+                            enableSubmit(); // new update
+                        } */
+                }   
+            }
+        </script>
+
+        <!-- Custom styles for this template -->
+        <link href="cover.css" rel="stylesheet">
+        <link href="css/dashboard-v3.css" rel="stylesheet">
+        <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+        <!-- CSS only -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+        <!-- JS, Popper.js, and jQuery -->
+        
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+
+    <body class="text-center" onload="set_max_date(); enable_2nd_calander();">
+        <header class="bg-white" style="margin-top: 5px; margin-bottom: 5px;">
+            <a href="https://www.uta.edu" target="_blank"><img id="uta_logo" src="{{ url_for('static', filename='imgs/uta-logo-v2.png') }}" class="rounded float-left" style="margin-left: 15px;"></a>
+            <a href="https://itlab.uta.edu/" target="_blank"><img id="itlab_logo" src="{{ url_for('static', filename='imgs/itlab-logo-v2.png') }}" class="rounded float-right" style="margin-right: 15px;"></a>
+            <a href="https://itlab.uta.edu/cowiz/"><img id="center" src="{{ url_for('static', filename='imgs/banner-v4.png') }}" class="rounded mx-auto d-block img-height-auto"></a>
+        </header>
+        
+        <main class="container-fluid" style="width: 100%; font-size:1.2vw">
+			<div class="" style="width:100%; ">
+				
+				<div class="border border-dark text-light container-fluid float-left" style="margin-top: 0; width: 18.5%; height: 2.3vw; border-radius: 0px; background-color:#008DC9;">
+					<p style="margin-top:0.15vw">Cumulative <strong>WHO</strong> Update</p>
+				</div>
+				
+				<div class="border border-dark float-right container-fluid" style="margin-top: 0; width: 81.5%; height: 2.3vw; border-radius: 0px;">
+					<!-- <marquee scrolldelay="10"> -->
+                        <span style="color:black;"><strong>WORLD:</strong></span> <span style="color:#ED7D31;">
+					<strong> <span id="WorldCases"></span></strong></span> | <strong><span style="color:red"><span id="WorldDeath"></span></span></strong> <img src="static/imgs/images/covid-logo.png" height="18vw"> <span style="color:black;"><strong>USA:</strong></span> <span style="color:#ED7D31;">
+                    <strong> <span id="USCases"></span></strong></span> | <strong><span style="color:red"><span id="USDeaths"></span></span></strong> <em>(As of <span id="lastUpdate"></span> )</em>
+                <!-- </marquee> -->
+				</div>
+            </div>
+            <br/>
+            <br/>
+
+            <div class="" style="width:100%; margin-bottom:3vw; margin-top:-0.8vw">
+				
+				<div class="border border-dark text-light container-fluid float-left" align="center" style="margin-top: 0; width: 18.5%; height: 4.1vw; border-radius: 0px; background-color:#4273C5;">
+					 <p style="margin-top:1vw">Target Period Highlights</p>
+				</div>
+                
+                {% if not highlights %}
+				<div id = "articles" class="border border-dark float-right container-fluid scroll" align="left" style="margin-top: 0; width: 81.5%; height: 4.1vw; border-radius: 0px; background-color:#FFF2CC">
+					<p style="margin-top:1vw">Top COVID-19 News Headlines from the Selected Target Period</p>
+                </div>
+                {% else %}
+                
+                <div id = "articles" class="border border-dark float-right container-fluid scroll overflow-auto" align="left" style="margin-top: 0; width: 81.5%; height: 4.1vw; border-radius: 0px; background-color:#FFF2CC">
+                    {% for highlight in highlights %}
+                    <b>{{highlight['pub_date']}}: </b>{{highlight['headline']['main']}} 
+                    (<a href="{{highlight['web_url']}}" target="_blank">Details</a>)<br>
+                    {% endfor %}
+                </div>
+                
+                {% endif %}
+			</div>
+            <br/>
+            <div class="">
+                <div class="float-left" style="width: 18.5%">
+                    <div class="border bg-secondary border-dark container-fluid" style="width: 100%; height: 100%;">
+                            <div class="container-fluid">
+
+                                    {% if not ipt %}
+                                    <form action = "map" method = "POST" novalidate>
+                                        
+                                        <select style="background-color:#BECFEB;" data-toggle="tooltip" data-placement="top" data_html = "true" title="Select the length (in number of days) for the periods to be analyzed" class=" m-2 btn btn-light {% if check['period'] == 0 %} border-danger {% endif %}" id="periodLength" name="periodLength" size="1" onchange="toBorderDark(id); adjust_min_of_2nd_period(); enable_2nd_calander(); enableSubmit(); enable_1st_calander(); set_max_date(); resetDates(id);">
+
+                                            {% for i in intervals %}
+                                            {% if i == 0 %}
+                                            <option value="{{i}}">Select an Interval</option>
+                                            {% else %}
+                                            <option value="{{i}}">{{i}} Day(s)</option>
+                                            {% endif %}
+                                            {% endfor %}
+
+                                        </select>
+                                        
+                                        <div style="background-color:#FFF2CC;" class="card p-1" data-toggle="tooltip" data-placement="top" title="Select the period whose number of new cases form the basis of comparison">
+                                            <h6 class="card-title text-center">Base Period</h6>
+                                            <input style="background-color:#BECFEB;" class="  m-2 btn btn-light   {% if check['startDate'] == 0 %} border-danger {% endif %}" type="date" id="start_of_startDate" min="2020-02-01" name="start_of_startDate" onchange="toBorderDark(id); enableSubmit(); adjust_min_of_2nd_period(); enable_2nd_calander(); setEnd(id); resetDates(id);" disabled>
+                                            
+                                            <label style="background-color:#4273C5;" id="end_of_startDate" class="btn m-2 btn-dark">-</label>
+                                        </div>
+                                        
+                                        <div class="m-1 text-light font-weight-bold">V/S</div>
+                                        
+                                        <div style="background-color:#FFF2CC;" class="card p-1" data-toggle="tooltip" data-placement="top" title="Select the period whose number of new cases are to be compared against the Base Period">
+                                            <h6 class="card-title text-center">Target Period</h6>
+                                            <input style="background-color:#BECFEB;" class="m-2  btn btn-light {% if check['endDate'] == 0 %} border-danger {% endif %}" type="date" id="start_of_endDate" name="start_of_endDate" min="2020-02-01" onchange="toBorderDark(id); enableSubmit(); setEnd(id);" disabled>
+                        
+                                            <label style="background-color:#4273C5;" id="end_of_endDate" class="m-2  btn btn-dark">-</label>
+                                        </div>
+
+                                        <select style="background-color:#BECFEB;" data-toggle="tooltip"data-placement="top" title="Select the extent of change that needs to be analyzed" class=" m-2 btn btn-light {% if check['interval'] == 0 %} border-danger {% endif %}" id="interval" name="interval" size="1" onchange="toBorderDark(id); enableSubmit();">
+                
+                                            {% for i in rates.keys() %}
+                                            {% if rates[i] == -1 %}
+                                            <option value="{{i}}">Severity Rate</option>
+                                            {% else %}
+                                            <option value="{{i}}">{{rates[i]}}</option>
+                                            {% endif %}
+                                            {% endfor %}
+
+                                        </select>
+                                        <br/>
+                                        <input id="submit" class=" btn btn-dark m-2" type="submit" value ="Submit" disabled>
+                                        {% if message %}
+                                        <label class="text-danger form-check-label">* {{message}}</label>
+                                        {% endif %}
+                                    </form>
+
+                                    {% else %}
+                                    
+                                    <form action = "map" method = "POST" novalidate>
+                                        
+                                        <select style="background-color:#BECFEB;" data-toggle="tooltip"data-placement="top" title="Select the length (in number of days) for the periods to be analyzed" class=" m-2  btn btn-light {% if check['period'] == 0 %} border-danger {% endif %}" id="periodLength" name="periodLength" size="1" onchange="toBorderDark(id); resetDates(id); adjust_min_of_2nd_period(); enable_2nd_calander(); enableSubmit(); enable_1st_calander(); set_max_date(); setEnd(id); resetDates(id);">
+
+                                           
+                                            {% for i in intervals %}
+                                            
+                                            {% if i == 0 %}
+                                            <option value="{{i}}">Select an Interval</option>
+                                            {% elif i|int == ipt['periodLength']|int %}
+                                            <option value="{{i}}" selected>{{i}} Day(s)</option>
+                                            {% else %}
+                                            <option value="{{i}}">{{i}} Day(s)</option>
+                                            {% endif %}
+                                            {% endfor %}
+
+                                        </select>
+                                        
+                                        <div style="background-color:#FFF2CC;" class="card p-1" data-toggle="tooltip"data-placement="top" title="Select the period whose number of new cases form the basis of comparison">
+                                            <h6 class="card-title text-center">Base Period</h6>
+                                            <input style="background-color:#BECFEB;" class=" m-2 btn btn-light   {% if check['startDate'] == 0 %} border-danger {% endif %}" type="date" id="start_of_startDate" min="2020-02-01" name="start_of_startDate" value="{{ipt['start_of_startDate']}}" onchange="toBorderDark(id); adjust_min_of_2nd_period(); enable_2nd_calander(); setEnd(id); resetDates(id); enableSubmit();">
+                                            
+                                            <label style="background-color:#4273C5;" id="end_of_startDate" class="m-2  btn btn-dark">{{start}}</label>
+                                        </div>
+                                        <div class="m-1 text-light font-weight-bold">V/S</div>
+                                        <div style="background-color:#FFF2CC;" class="card p-1" data-toggle="tooltip"data-placement="top" title="Select the period whose number of new cases are to be compared against the Base Period">
+                                            <h6 class="card-title text-center">Target Period</h6>
+                                            <input style="background-color:#BECFEB;" class=" m-2  btn btn-light {% if check['endDate'] == 0 %} border-danger {% endif %}" type="date" id="start_of_endDate" name="start_of_endDate" min="2020-02-01" value="{{ipt['start_of_endDate']}}" onchange="toBorderDark(id); enableSubmit(); setEnd(id); resetDates(id);" disabled>
+                                            
+                                            <label style="background-color:#4273C5;" id="end_of_endDate" class="m-2 btn btn-dark">{{end}}</label>
+                                        </div>
+
+                                        <select style="background-color:#BECFEB;" data-toggle="tooltip"data-placement="top" title="Select the extent of change that needs to be analyzed" class=" m-2  btn btn-light {% if check['interval'] == 0 %} border-danger {% endif %}" id="interval" name="interval" size="1" onchange="toBorderDark(id); enableSubmit();">
+                
+                                            {% for i in rates.keys() %}
+                                            {% if rates[i] == 0 %}
+                                            <option value="{{i}}">Severity Rate</option>
+                                            {% elif i|int == ipt['interval']|int %}
+                                            <option value="{{i}}" selected>{{rates[i]}}</option>
+                                            {% else %}
+                                            <option value="{{i}}">{{rates[i]}}</option>
+                                            {% endif %}
+                                            {% endfor %}
+
+                                        </select>
+                                        <br/>
+                                        <input id="submit" class=" m-2  btn btn-dark m-2" type="submit" value ="Submit">
+                                        {% if message %}
+                                        <label class="text-danger form-check-label">* {{message}}</label>
+                                        {% endif %}
+                                    </form>
+                                    {% endif %}
+                            </div> 
+                    </div>
+                </div>
+
+                {% if filepath %}
+                <div class="embed-responsive embed-responsive-21by9 text-center m-1 " style="width: 81.5%; position: relative;">
+                    <iframe src="{{ url_for('static', filename=filepath) }}" width="100%;" class="embed-responsive-item" allowfullscreen></iframe>
+                </div>
+                {% else %}
+                <div class="embed-responsive embed-responsive-21by9 text-center m-1 " style="width: 81.5%; position: relative;">
+                    <iframe src="{{ url_for('static', filename='maps/default.html') }}" width="100%;" class="embed-responsive-item" allowfullscreen></iframe>
+                </div>
+                {% endif %}
+
+            </div>	
+            <br/>
+        </main>
+        <br/>
+	<div class='container-fluid' style="margin-top:2vw; margin-bottom: 1vw; height:40px; font-size:1.2vw">
+                <!-- <div class="  card float-left"> -->
+
+                
+                    <div class="border border-dark card text-light bg-secondary container-fluid float-left" style="width: 13%;  height: 2.3vw; border-radius: 0px; background-color:#FFF7DD; margin-left:15px">
+                        <p style="margin-top:0.15vw">Data Sources</p>
+                    </div>
+                    <div class="container-fluid float-left" style="width: 12%;  height: 2.1vw; border-radius: 0px;">
+                        <a href="https://github.com/nytimes/covid-19-data" target="_blank"><img src="{{ url_for('static', filename='imgs/images/source-nytime-logo-v2.png') }}" height="30px" style=""></a>
+                    </div>
+                    <div class="container-fluid float-left" style="width: 10%;  height: 2.2vw; border-radius: 0px;">
+                        <a href="https://data.census.gov/cedsci/" target="_blank"><img src="{{ url_for('static', filename='imgs/images/datasource-census-logo-v1.jpg') }}" height="30px" style=""></a>
+                    </div>
+                    <div class="container-fluid float-left" style="width: 8%;  height: 2.2vw; border-radius: 0px;">
+                        <a href="https://covid19.who.int/table" target="_blank"><img src="{{ url_for('static', filename='imgs/images/who-logo.png') }}" height="30px" align="left" style="margin-left:-20px"></a>
+                    </div>
+                    <div class="border border-dark card text-light bg-secondary container-fluid float-left" style="width: 12%;  height: 2.3vw; border-radius: 0px; background-color:#FFF7DD; margin-left:-20px">
+                        <p style="margin-top:0.15vw">Funding Sources</p>
+                    </div>
+    
+                    <div class="container-fluid float-left" style="width: 6%;  height: 2.2vw; border-radius: 0px;">		
+                        <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=1955798&HistoricalAwards=false" target="_blank"><img src="{{ url_for('static', filename='imgs/images/nsf-logo-v2.png') }}" height="40px" style="margin-top:-5px; margin-left:-20px"></a>
+                    </div>
+                    
+                    <div class="border border-dark card text-light bg-secondary container-fluid float-left" style="width: 12%;  height: 2.3vw; border-radius: 0px; background-color:#FFF7DD; margin-left:10px">
+                        <p style="margin-top:0.15vw">Visitor Count</p>
+                    </div>
+
+                    <div class="container-fluid float-left" style="width: 6%;  height: 2.2vw; border-radius: 0px;">		
+                        <!-- Start of WebFreeCounter Code -->
+<a href="https://www.webfreecounter.com/" target="_blank"><img src="https://www.webfreecounter.com/hit.php?id=gfccca&nd=6&style=31" border="0" alt="hit counter"></a>
+<!-- End of WebFreeCounter Code -->
+                    </div>
+
+                <div class="card container-fluid float-left" style="width: 11%;  height: 2.3vw; border-radius: 0px; border-color: #FFFFFF; margin-left:100px; margin-top:-5px">
+                    <button type="button" class="btn btn-info" onclick="window.open('mailto:itlab.cse.uta@gmail.com')">Feedback</button>
+                </div>
+
+                    
+                    <!-- <div class="border border-dark card text-light bg-secondary container-fluid float-left" style="width: 12%;  height: 2.3vw; border-radius: 0px; background-color:#FFF7DD; padding-left:5px; margin-left:20px"> -->
+                        <!-- p style="margin-top:0.15vw">Visitor Count</p>
+                    </div>  -->
+    <!-- 
+                    <div class="container-fluid float-left" style="width: 5%;  height: 2.1vw; border-radius: 0px;">
+    <div id="sfckraygb32g7w1fdfjcrt9bws1cmhjxc5q"></div><script type="text/javascript" src="https://counter3.stat.ovh/private/counter.js?c=kraygb32g7w1fdfjcrt9bws1cmhjxc5q&down=async" async></script><br><a href="https://www.freecounterstat.com"></a><noscript><a href="https://www.freecounterstat.com" title="web counter"><img src="https://counter3.stat.ovh/private/freecounterstat.php?c=kraygb32g7w1fdfjcrt9bws1cmhjxc5q" border="0" title="web counter" alt="web counter"></a></noscript></div> -->
+                <!-- </div> -->
+    </div>
+        <hr class="" color="black" style="height: 0px; margin-bottom: 0; margin-top: 0vw;"/>
+        
+        <div style="background-color:#002463;" class=" p-2 container-fluid" style="font-size:1.1vw">
+            <p class="float-left text-light"><a href="https://www.linkedin.com/in/abhishek-santra/" target="_blank"  style="color:white">Abhishek Santra</a> | <a href="https://linkedin.com/in/kunalsamant" target="_blank"  style="color:white">Kunal Samant</a> | <a href="https://www.linkedin.com/in/enamul17/" target="_blank"  style="color:white">Enamul Karim</a> | <a href="https://www.linkedin.com/in/endrit-m/" target="_blank"  style="color:white">Endrit Memeti</a> | <a href="http://itlab.uta.edu/index.html" target="_blank"  style="color:white">Sharma Chakravarthy</a> | <a href="mailto:itlab.cse.uta@gmail.com" target="_blank"><img src="{{url_for('static', filename='imgs/images/email.png')}}" height=17px></a></p>
+            <p class="float-right text-light">
+			&copy; 2020 The University of Texas at Arlington </p>
+            <br/>
+        </div>
+		<div align="center" hidden="hidden">
+		 <button type="button" name="load_data" id="load_data" hidden="hidden" class="btn btn-info">Load Data</button>
+		</div>
+    </body>
+</html>
+<script>
+$(document).ready(function(){
+$(function() {
+    $('#load_data').click();
+});
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+var xhReq = new XMLHttpRequest();
+xhReq.open("HEAD", "static/WHO/WHO-COVID-19-global-data.csv", false);
+xhReq.send(null);
+var lastModified = xhReq.getResponseHeader("Last-Modified");
+
+
+var d = new Date();
+var month = d.getMonth()+1;
+var pday = d.getDate()-1;
+var day = d.getDate();
+var date = d.getFullYear() + '-' +
+    (month<10 ? '0' : '') + month + '-' +
+    (day<10 ? '0' : '') + day;
+if(day==1)
+{
+   month--;
+   if(month==0)
+   {
+      month=12;
+      
+  
+}
+
+var prevDate = d.getFullYear() + '-' +
+    (month<10 ? '0' : '') + month + '-' +
+    (day<10 ? '0' : '') + pday;
+
+//var url      = window.location.href; 
+//$('#test').html(lastModified+""); 
+	
+ $('#load_data').click(function(){
+  
+  $.ajax({   
+   url:"static/WHO/WHO-COVID-19-global-data.csv",
+   dataType:"text",
+   success:function(data)
+   {
+   var globalCase=0, globalDeath=0;
+   var covid_data = data.split(/\r?\n|\r/);
+    for(var count = 0; count<covid_data.length; count++)
+    {
+//     var cell_data = covid_data[count].split(",");
+         var cell_data = covid_data[count].match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+         cell_data = cell_data || [];
+		 if(cell_data[0]==date){
+	      if(cell_data[1]=="US"){
+		     var USCases=cell_data[5];
+		     var USDeaths=cell_data[7];
+		   }
+		   globalCase=globalCase+parseInt(cell_data[5]);
+		   globalDeath=globalDeath+parseInt(cell_data[7]);
+    
+		 }
+    }
+	if(globalCase==0 || globalDeath==0)
+	{
+		for(var count = 0; count<covid_data.length; count++)
+		{
+//		 var cell_data = covid_data[count].split(",");
+          var cell_data = covid_data[count].match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+		  cell_data = cell_data || [];
+		 
+			 if(cell_data[0]==prevDate){
+			  if(cell_data[1]=="US"){
+				 var USCases=cell_data[5];
+				 var USDeaths=cell_data[7];
+			   }
+			   globalCase=globalCase+parseInt(cell_data[5]);
+			   globalDeath=globalDeath+parseInt(cell_data[7]);
+			 }
+		}
+	
+	}
+
+	$('#WorldCases').html(numberWithCommas(globalCase)+" Cases");
+	$('#WorldDeath').html(numberWithCommas(globalDeath)+" Deaths");
+	$('#USCases').html(numberWithCommas(USCases)+" Cases");
+	$('#USDeaths').html(numberWithCommas(USDeaths)+" Deaths");
+	//$('#lastUpdate').html(lastModified+"");
+	$('#lastUpdate').html(lastModified+"");
+	//$('#test').html("Global Case: "+numberWithCommas(globalCase)+"Global Death: "+globalDeath+"US Case: "+USCase+"US Death: "+USDeath);
+       
+    
+   }
+      
+  });
+ });
+ 
+});
+</script>
