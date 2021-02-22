@@ -8,6 +8,7 @@ from v3 import app
 from v3 import static
 from v3.map_test import map_test
 import csv
+from v3.feature_graph import main
 
 @app.route("/")
 def index():

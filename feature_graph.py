@@ -36,9 +36,9 @@ class graph_test() :
 
 
 
-def main() :
+def main(states, fe1='New Cases', fe2='New Deaths') :
   nGraph = graph_test( ['TX', 'FL', 'NJ'], '2021-01-08', 10, 
-                       'New Cases','New Deaths' )
+                       fe1, fe2 )
 
   fig = feature_graph(nGraph.states, nGraph.start, nGraph.days, 
                       nGraph.f1, nGraph.f2)
