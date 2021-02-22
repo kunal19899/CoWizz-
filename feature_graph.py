@@ -47,12 +47,12 @@ def main(states, fe1, fe2) :
   fig = feature_graph(nGraph.states, nGraph.start, nGraph.days, 
                       nGraph.f1, nGraph.f2)
 
-  states_list = '_'.join(states)
-  link_name = '/static/animations/' + states_list + '_' + fe1 + '_' + fe2 + '.html'
+  # states_list = '_'.join(states)
+  # link_name = '/static/animations/' + states_list + '_' + fe1 + '_' + fe2 + '.html'
   
-  pio.write_html(fig, file=link_name, auto_open=False)
+  pio.write_html(fig, file='graphtest.html', auto_open=False)
 
-  return link_name
+  return '/static/animations/graphtest1.html'
 
 
 #-------------------------------------------------------------
