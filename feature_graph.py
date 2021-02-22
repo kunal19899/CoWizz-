@@ -17,9 +17,12 @@ DEFAULT_PLOTLY_COLORS=['rgb(31, 119, 180)', 'rgb(255, 127, 14)',
 class graph_test() :
   # Constructor for routes.py to send/receive data
   #   from this program
-  def __init__( self, state_list, num_days, feature1, feature2) :
+  def __init__( self, state_list, start_date, num_days, feature1, feature2) :
     # Stores the states they want to display
     self.states = state_list
+
+    # Stores the date the user wants to start displaying (in YYYY-MM-DD format)
+    self.start = start_date 
 
     # Stores the number of days the user wants to cover
     self.days = num_days
@@ -34,17 +37,18 @@ class graph_test() :
 
 
 def main() :
-  nGraph = graph_test( ['TX', 'FL', 'NJ'], 10, 'New Cases','New Deaths' )
+  nGraph = graph_test( ['TX', 'FL', 'NJ'], '2021-01-08', 10, 
+                       'New Cases','New Deaths' )
 
-  fig = feature_graph(nGraph.states, nGraph.days, nGraph.f1,
-                      nGraph.f2)
+  fig = feature_graph(nGraph.states, nGraph.start, nGraph.days, 
+                      nGraph.f1, nGraph.f2)
   
   pio.write_html(fig, file='graphtest.html', auto_open=False)
 
 
 
 #-------------------------------------------------------------
-def feature_graph( st, nDays, fe1, fe2 ) :
+def feature_graph( st, sDate, nDays, fe1, fe2 ) :
   num_frames = nDays
 
   # lines that appear on the graph, should be one per state chosen
@@ -66,7 +70,7 @@ def feature_graph( st, nDays, fe1, fe2 ) :
 
     # finds the index for where the state and the date selected align
     # tolist() is used to cast a Int64Index type to an integer type
-    strt_idx = df[ (df['state']==st[i]) & (df['date']=='2021-01-08') ].index.tolist()
+    strt_idx = df[ (df['state']==st[i]) & (df['date']==sDate) ].index.tolist()
 
     # tolist() turns the object into a list object, since it will only
     #   store one value (the row number in the CSV file where the data 

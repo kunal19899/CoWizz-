@@ -17,9 +17,12 @@ DEFAULT_PLOTLY_COLORS=['rgb(31, 119, 180)', 'rgb(255, 127, 14)',
 class graph_test() :
   # Constructor for routes.py to send/receive data
   #   from this program
-  def __init__( self, state_list, num_days, feature1, feature2) :
+  def __init__( self, state_list, start_date, num_days, feature1, feature2) :
     # Stores the states they want to display
     self.states = state_list
+
+    # Stores the date the user wants to start displaying (in YYYY-MM-DD format)
+    self.start = start_date
 
     # Stores the number of days the user wants to cover
     self.days = num_days
