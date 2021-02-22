@@ -374,7 +374,7 @@
         <header class="bg-white" style="margin-top: 5px; margin-bottom: 5px;">
             <a href="https://www.uta.edu" target="_blank"><img id="uta_logo" src="{{ url_for('static', filename='imgs/uta-logo-v2.png') }}" class="rounded float-left" style="margin-left: 15px;"></a>
             <a href="https://itlab.uta.edu/" target="_blank"><img id="itlab_logo" src="{{ url_for('static', filename='imgs/itlab-logo-v2.png') }}" class="rounded float-right" style="margin-right: 15px;"></a>
-            <a href="https://itlab.uta.edu/cowiz/"><img id="center" src="{{ url_for('static', filename='imgs/web-images-1/header-2.png') }}" class="rounded mx-auto d-block img-height-auto"></a>
+            <a href="https://itlab.uta.edu/cowiz/"><img id="center" src="{{ url_for('static', filename='imgs/web-images-1/header-3.png') }}" class="rounded mx-auto d-block img-height-auto"></a>
         </header>
         
         <main class="container-fluid" style="width: 100%; font-size:1.2vw">
@@ -392,19 +392,17 @@
                 <!-- </marquee> -->
 				</div>
             </div>
-            <br/>
-            <br/>
 
 
             
 
             <!-----------------------Edit the input bar here -------------------------------->
             <div class="container-fluid ">
-                <div class="card-group bg-secondary p-3">
+                <div class="card-deck bg-secondary p-3">
                     <form class="container-fluid" action="animate" method="POST" novalidate> <!--connect form to "animate"
                          function on this line-->
                         
-                            <button class="card btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class=" btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                 Select upto 5 states...
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1" >
@@ -448,7 +446,19 @@
         
             
             <!-- Insert Iframe here  -->
-            
+            {% if link %}
+
+            <div class="embed-responsive embed-responsive-16by9 text-center m-1 " style="">
+                <iframe src="" width="100%;" class="embed-responsive-item" allowfullscreen></iframe>
+            </div>
+
+            {% else %}
+
+            <div class="embed-responsive embed-responsive-16by9 text-center m-1 " style="">
+                <iframe src="{{ url_for('static', filename='animations/graphtest.html') }}" width="100%;" class="embed-responsive-item" allowfullscreen></iframe>
+            </div>
+
+            {% endif %}
             <!------------------------->
             
    

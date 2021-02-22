@@ -49,7 +49,6 @@ def main(states, fe1, fe2) :
 
   states_list = '_'.join(states)
   link_name = '/static/animations/' + states_list + '_' + fe1 + '_' + fe2 + '.html'
-  print(link_name)
   
   pio.write_html(fig, file=link_name, auto_open=False)
 
