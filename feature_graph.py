@@ -50,7 +50,7 @@ def main(states, fe1, fe2) :
   fig = feature_graph(nGraph.states, nGraph.start, nGraph.days, 
                       nGraph.f1, nGraph.f2)
   
-  pio.write_html(fig, file='graphtest.html', auto_open=False)
+  pio.write_html(fig, file='/static/animations/graphtest.html', auto_open=False)
 
   return '/static/animations/graphtest.html'
 
@@ -157,6 +157,10 @@ def feature_graph( st, sDate, nDays, fe1, fe2 ) :
     #   to draw from frame to frame
     data.append(day_data)   
 
+  # Update the number of traces by two since there are two graphs
+  for i in range(len(num_traces), len(num_traces)*2) :
+    num_traces.append( int(i) )
+
   frames =[go.Frame(data=data[k],
                     traces=num_traces) for k in range(num_frames+1)]   # define the number of frames
 
@@ -222,6 +226,15 @@ def feature_graph( st, sDate, nDays, fe1, fe2 ) :
                                       yanchor='top',
                                       buttons=[play_button, pause_button])],
                     sliders=sliders)
+
+  # rather than update the graphs day-by-day, this updates the traces over a fixed range of days
+  fig.update_xaxes(range=[ (pd.to_datetime(dates[0], format='%Y-%m-%d') - pd.Timedelta(days=1)), 
+                           (pd.to_datetime(dates[len(dates)-1], format='%Y-%m-%d') + pd.Timedelta(days=1)) ],
+                   row=1, col=1)
+
+  fig.update_xaxes(range=[ (pd.to_datetime(dates[0], format='%Y-%m-%d') - pd.Timedelta(days=1)), 
+                           (pd.to_datetime(dates[len(dates)-1], format='%Y-%m-%d') + pd.Timedelta(days=1)) ],
+                   row=1, col=2)
 
   # include the y axis titles for each subplot
   fig.update_yaxes(title_text=fe1, row=1, col=1)
