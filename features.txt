@@ -1,0 +1,3 @@
+New Deaths
+New Cases
+New Tests

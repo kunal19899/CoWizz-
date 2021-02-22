@@ -25,7 +25,7 @@ class graph_test() :
     self.start = start_date 
 
     # Stores the number of days the user wants to cover
-    self.days = num_days
+    self.days = int(num_days)
 
     # Stores the first feature user wants to display
     self.f1 = feature1
@@ -36,7 +36,14 @@ class graph_test() :
 
 
 
-def main(states, fe1='New Cases', fe2='New Deaths') :
+def main(states, fe1, fe2) :
+  # Read a file with a list of all the known features CoWiz supports
+  with open( 'features.txt', 'r' ) as fp :
+      features = fp.read().replace( '\r', '' ).split( '\n' )
+
+  fe1 = features[1] 
+  fe2 = features[0]
+
   nGraph = graph_test( states, '2021-01-08', 10, 
                        fe1, fe2 )
 
@@ -45,6 +52,7 @@ def main(states, fe1='New Cases', fe2='New Deaths') :
   
   pio.write_html(fig, file='graphtest.html', auto_open=False)
 
+  return '/static/animations/graphtest.html'
 
 
 #-------------------------------------------------------------
@@ -220,4 +228,3 @@ def feature_graph( st, sDate, nDays, fe1, fe2 ) :
   fig.update_yaxes(title_text=fe2, row=1, col=2)
 
   return fig
-
