@@ -15,21 +15,13 @@ def index():
     inputForm = InputForm()
     states = load_states()
     features = load_features()
-    return render_template("index.html", form = inputForm, states = states, features = features, link = '')
+    return render_template("index_skeleton.html", form = inputForm, states = states, features = features, link = '')
 
 
 @app.route("/animate", methods=['POST'])
 def animate():
     ################ complete animate function to parse input here ##############
-    states=[]
-    if request.method == "POST":
-        ipt = request.form
-        for item in ipt:
-            if item != 'feature1':
-                states.append(ipt[item])
-            else: break
-        link = main(states, ipt['feature1'], ipt['feature2'])
-        print(link)
+
     return 
     #############################################################################
 

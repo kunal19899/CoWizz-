@@ -38,21 +38,22 @@ class graph_test() :
 
 def main(states, fe1, fe2) :
   # Read a file with a list of all the known features CoWiz supports
-  with open( 'features.txt', 'r' ) as fp :
+  with open( 'v3/static/features.txt', 'r' ) as fp :
       features = fp.read().replace( '\r', '' ).split( '\n' )
-
-  fe1 = features[1] 
-  fe2 = features[0]
 
   nGraph = graph_test( states, '2021-01-08', 10, 
                        fe1, fe2 )
 
   fig = feature_graph(nGraph.states, nGraph.start, nGraph.days, 
                       nGraph.f1, nGraph.f2)
-  
-  pio.write_html(fig, file='/static/animations/graphtest.html', auto_open=False)
 
-  return '/static/animations/graphtest.html'
+  states_list = '_'.join(states)
+  link_name = '/static/animations/' + states_list + '_' + fe1 + '_' + fe2 + '.html'
+  print(link_name)
+  
+  pio.write_html(fig, file=link_name, auto_open=False)
+
+  return link_name
 
 
 #-------------------------------------------------------------
@@ -62,7 +63,7 @@ def feature_graph( st, sDate, nDays, fe1, fe2 ) :
   # lines that appear on the graph, should be one per state chosen
   num_traces = []
 
-  df = pd.read_csv('sample_test.csv')
+  df = pd.read_csv('v3/sample_test.csv')
 
   # casts the date parameter from the csv into a Date object so it
   #   can be readable by the program
