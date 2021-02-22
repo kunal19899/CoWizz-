@@ -7,9 +7,9 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1" >
                               
-                                {% for state in states %}
+                                {% for state in states.keys() %}
 
-                                <input name="{{state}}" class="m-1" type="checkbox" value="active">{{state}}<br/>
+                                <input name="{{state}}" class="m-1" type="checkbox" value="{{states[state]}}">{{state}}<br/>
 
                                 {% endfor %}
 
@@ -126,3 +126,18 @@ def check_return_to_default():
     check['startDate'] = 1
     check['endDate'] = 1
     check['interval'] = 1
+
+{% if link %}
+
+            <div class="embed-responsive embed-responsive-21by9 text-center m-1 " style="">
+                <iframe src="" width="100%;" class="embed-responsive-item" allowfullscreen></iframe>
+            </div>
+
+            {% else %}
+
+            <div class="embed-responsive embed-responsive-16by9 text-center m-1 bg-dark" style="">
+                Hello
+                <iframe src="{{ url_for('static', filename='animations/graphtest.html') }}" width="100%;" class="embed-responsive-item" allowfullscreen></iframe>
+            </div>
+
+            {% endif %}

@@ -37,7 +37,7 @@ class graph_test() :
 
 
 def main(states, fe1='New Cases', fe2='New Deaths') :
-  nGraph = graph_test( ['TX', 'FL', 'NJ'], '2021-01-08', 10, 
+  nGraph = graph_test( states, '2021-01-08', 10, 
                        fe1, fe2 )
 
   fig = feature_graph(nGraph.states, nGraph.start, nGraph.days, 
@@ -220,4 +220,4 @@ def feature_graph( st, sDate, nDays, fe1, fe2 ) :
   fig.update_yaxes(title_text=fe2, row=1, col=2)
 
   return fig
-main()
+

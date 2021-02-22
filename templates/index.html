@@ -401,7 +401,7 @@
             <!-----------------------Edit the input bar here -------------------------------->
             <div class="container-fluid ">
                 <div class="card-group bg-secondary p-3">
-                    <form class="container-fluid" action="animate" method="POST" novalidate> <!--connect form to "animate"
+                    <form class="container-fluid" action="" method="POST" novalidate> <!--connect form to "animate"
                          function on this line-->
                         
                             <button class="card btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -409,31 +409,22 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1" >
                                 <!--enter state information here as a dropdown-->
-                                {% for state in states %}
-
-                                <input name="{{state}}" class="m-1" type="checkbox" value="active">{{state}}<br/>
-
-                                {% endfor %}
+                                
 
                             </div>
                         
 
                         <select id="feature1" class="card btn btn-light m-2" name="feature1">
                             <!--enter feature 1 information here-->
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
+                            
                         </select>
 
                         <select id="feature2" class="card btn btn-light m-2" name="feature2">
                             <!--enter feature 2 information here-->
 
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
                         </select>
                         <!-- add a submit button here-->
-                        <input id="submit" class="btn btn-light m-2" type="submit" value ="Submit">
+
                         <!----------------------------->
                     </form>
                 </div>

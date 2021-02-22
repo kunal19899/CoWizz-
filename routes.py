@@ -14,24 +14,24 @@ from v3.feature_graph import main
 def index():
     inputForm = InputForm()
     states = load_states()
-    return render_template("index.html", form = inputForm, states = states)
+    return render_template("index.html", form = inputForm, states = states, link = '')
 
 
 @app.route("/animate", methods=['POST'])
 def animate():
     ################ complete animate function to parse input here ##############
 
-    return
+    return 
     #############################################################################
 
 
 def load_states():
-    states_names = []
+    states_names = {}
     with open('v3/static/states.csv') as states:
         states_map = csv.reader(states, delimiter=',')
         for state, abbr in states_map:
             if state != "State":
-                states_names.append(state)
+                states_names[state] = abbr
     return states_names
 
 
