@@ -31,8 +31,8 @@ def animate():
             if item != 'feature1':
                 stateList.append(ipt[item])
             else: break
-        link = main(stateList, ipt['feature1'], ipt['feature2'])
-    return render_template('index.html', form = inputForm, states = states, features=features, link = link)
+        main(stateList, ipt['feature1'], ipt['feature2'])
+    return render_template('index.html', form = inputForm, states = states, features=features, link = 'active')
     #############################################################################
 
 

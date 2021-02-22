@@ -40,8 +40,6 @@ def main(states, fe1, fe2) :
   # Read a file with a list of all the known features CoWiz supports
   with open( 'v3/static/features.txt', 'r' ) as fp :
       features = fp.read().replace( '\r', '' ).split( '\n' )
-  
-  print(features[1])
 
   nGraph = graph_test( states, '2021-01-08', 10, 
                        fe1, fe2 )
@@ -49,17 +47,12 @@ def main(states, fe1, fe2) :
   fig = feature_graph(nGraph.states, nGraph.start, nGraph.days, 
                       nGraph.f1, nGraph.f2)
 
-<<<<<<< HEAD
-  # states_list = '_'.join(states)
-  # link_name = '/static/animations/' + states_list + '_' + fe1 + '_' + fe2 + '.html'
-=======
   #states_list = '_'.join(states)
   link_name = 'v3/static/animations/graphtest.html'
->>>>>>> 4c1c7fa208c8fe72a2f143a608e3e53c9523b924
   
-  pio.write_html(fig, file='graphtest.html', auto_open=False)
+  pio.write_html(fig, file=link_name, auto_open=False)
 
-  return '/static/animations/graphtest1.html'
+  return link_name
 
 
 #-------------------------------------------------------------
