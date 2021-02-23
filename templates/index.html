@@ -83,10 +83,11 @@
                     document.getElementById(queue[0]).checked = false;
                     queue.shift();
                 }
-                document.getElementById('stateList').value = queue.join(',');
+                document.getElementById('stateList').value = queue.join(', ');
             }
 
             function enableSubmit(id){
+                console.log(id);
                 if (document.getElementById('feature1').value != 'Select Feature' && 
                 document.getElementById('feature2').value != 'Select Feature' &&
                 queue.length != 0){
@@ -147,14 +148,14 @@
                 <div class="card-deck bg-secondary p-3">
                     <form class="container" action="animate" method="POST" novalidate> <!--connect form to "animate"
                          function on this line-->
-                        <button class=" btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false" onclick="enableSubmit(id);">
+                        <button class=" btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                             Select upto 5 states...
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1" >
+                        <div class="dropdown-menu"  >
                             <!--enter state information here as a dropdown-->
                             {% for state in states.keys() %}
 
-                            <input id ="{{state}}" name="{{state}}" class="m-1 " type="checkbox" value="{{states[state]}}" onclick="countStates(id);">{{state}}<br/>
+                            <input id ="{{state}}" name="{{state}}" class="m-1 " type="checkbox" value="{{states[state]}}" onclick="countStates(id); enableSubmit(id);">{{state}}<br/>
 
                             {% endfor %}
 
@@ -163,21 +164,21 @@
                         <input id="stateList" class="card btn btn-white m-2" type="text" value="" size="60" disabled/>
                                                   
 
-                        <select id="feature1" class="card btn btn-light m-2" name="feature1" onclick="enableSubmit(id);">
+                        <select id="feature1" class="card btn btn-light m-2" name="feature1" >
                             <!--enter feature 1 information here-->
                             {% for feature in features %}
 
-                            <option value = '{{feature}}'>{{feature}}</option>
+                            <option id = '{{feature}}' value = '{{feature}}' onclick="enableSubmit(id);">{{feature}}</option>
 
                             {% endfor %}
                         </select>
 
-                        <select id="feature2" class="card btn btn-light m-2" name="feature2" onclick="enableSubmit(id);">
+                        <select id="feature2" class="card btn btn-light m-2" name="feature2">
                             <!--enter feature 2 information here-->
 
                             {% for feature in features %}
 
-                            <option value = '{{feature}}'>{{feature}}</option>
+                            <option id = '{{feature}}' value = '{{feature}}' onclick="enableSubmit(id);">{{feature}}</option>
 
                             {% endfor %}
 
