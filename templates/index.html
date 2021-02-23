@@ -72,16 +72,20 @@
         </style>
         <script type='text/javascript'>
             var queue = [];
-            function countStates(id){
+            var abbr = [];
+            function countStates(id, value){
                 if (document.getElementById(id).checked == false){
                     queue.splice(queue.indexOf(id), 1);
+                    abbr.splice(abbr.indexOf(value), 1);
                 }
                 else{
                     queue.push(id);
+                    abbr.push(value);
                 }
                 if (queue.length==6){
                     document.getElementById(queue[0]).checked = false;
                     queue.shift();
+                    abbr.shift();
                 }
                 document.getElementById('stateList').value = queue.join(', ');
             }
@@ -154,7 +158,7 @@
                             <!--enter state information here as a dropdown-->
                             {% for state in states.keys() %}
 
-                            <input id ="{{state}}" name="{{state}}" class="m-1 " type="checkbox" value="{{states[state]}}" onclick="countStates(id); enableSubmit(id);">{{state}}<br/>
+                            <input id ="{{state}}" name="{{state}}" class="m-1 " type="checkbox" value="{{states[state]}}" onclick="countStates(id, value); enableSubmit(id);">{{state}}<br/>
 
                             {% endfor %}
 
@@ -302,7 +306,7 @@ $('#submit').click(function(){
    //var data = data.split(/\r?\n|\r/);
     //alert('alert');
     // Write your code here
-    var states = ['"TX"', '"AK"'];
+    var states = abbr;
     var stateData="";
     var covid_data = data.split(/\r?\n|\r/);
 	for (var i = 0; i < states.length; ++i) {
