@@ -88,6 +88,7 @@
                     abbr.shift();
                 }
                 document.getElementById('stateList').value = queue.join(', ');
+                console.log(abbr);
             }
 
             function enableSubmit(id){
@@ -186,6 +187,7 @@
                             {% endfor %}
 
                         </select>
+                        <select id="stateData" name="stateData" hidden="hidden"></select>
                         <!-- add a submit button here-->
                         <input id="submit" class="btn btn-light m-2" type="submit" value ="Submit" disabled>
                         <!----------------------------->
@@ -276,6 +278,7 @@
 $(document).ready(function(){
 $(function() {
     $('#load_data').click();
+    
 });
 
 function numberWithCommas(x) {
@@ -314,7 +317,7 @@ $('#submit').click(function(){
 		for(var count = 0; count<covid_data.length; count++)
 		{
 			var cell_data = covid_data[count].split(",");		
-			if(cell_data[1]===states[i])
+			if(cell_data[1]==='"'+states[i]+'"')
 			{
 				stateCases=stateCases+(parseInt(cell_data[22])|| 0);
 				stateDeaths=stateDeaths+(parseInt(cell_data[5])|| 0);
@@ -328,6 +331,8 @@ $('#submit').click(function(){
 	
 	alert(stateData);
 	//$('#stateData').html(stateData);
+    $('#stateData').html(stateData);
+    
   
    }
       

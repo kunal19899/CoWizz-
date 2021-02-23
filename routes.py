@@ -25,6 +25,7 @@ def animate():
     inputForm = InputForm()
     states = load_states()
     features = load_features()
+    print(request.form)
     if request.method == "POST":
         ipt = request.form
         for item in ipt:
