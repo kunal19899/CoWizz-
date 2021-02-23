@@ -20,7 +20,7 @@ To start working on this project you will need a clean environment to add and de
 
 3. ### Installing libraries
 
-    pip install requirements.txt
+    pip install -r requirements.txt
 
 Once you complete these steps your environment will be ready to run the most recent updates made to the dashboard by the ITLab visualization team.
 
