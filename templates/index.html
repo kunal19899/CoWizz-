@@ -291,7 +291,44 @@ var date = d.getFullYear() + '-' +
     (month<10 ? '0' : '') + month + '-' +
     (day<10 ? '0' : '') + day;
  
+$('#submit').click(function(){
+  
+  $.ajax({
+   //Load the csv file  
+   url:"../static/all-states-history.csv",
+   dataType:"text",
+   success:function(data)
+   {
+   //var data = data.split(/\r?\n|\r/);
+    //alert('alert');
+    // Write your code here
+    var states = ['"TX"', '"AK"'];
+    var stateData="";
+    var covid_data = data.split(/\r?\n|\r/);
+	for (var i = 0; i < states.length; ++i) {
+	    var globalCase=0, globalDeath=0, stateCases=0, stateDeaths=0,c=0;
+		for(var count = 0; count<covid_data.length; count++)
+		{
+			var cell_data = covid_data[count].split(",");		
+			if(cell_data[1]===states[i])
+			{
+				stateCases=stateCases+(parseInt(cell_data[22])|| 0);
+				stateDeaths=stateDeaths+(parseInt(cell_data[5])|| 0);
+			}
+		
+		}
+		stateData=stateData+states[i]+":"+"Cases= "+stateCases+" Deaths="+stateDeaths+"|";
+		//alert(stateCases+"  "+stateDeaths+" for: "+states[i]);
+		//alert(stateData);
+	}
 	
+	alert(stateData);
+	//$('#stateData').html(stateData);
+  
+   }
+      
+  });
+ });		
  $('#load_data').click(function(){
   
   $.ajax({   
