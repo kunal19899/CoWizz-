@@ -2,14 +2,14 @@
 <html>
     <head>
         <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2ZHW5H95M1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-2ZHW5H95M1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
 
-    gtag('config', 'G-2ZHW5H95M1');
-    </script>
+            gtag('config', 'G-2ZHW5H95M1');
+        </script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="COVID-19 Data Analysis and Visualization using Multilayer Networks at the Information Technology Lab in the Department of Computer Science and Engineering at The University of Texas at Arlington">
@@ -87,11 +87,10 @@
             }
 
             function enableSubmit(id){
-                console.log(id);
                 if (document.getElementById('feature1').value != 'Select Feature' && 
                 document.getElementById('feature2').value != 'Select Feature' &&
                 queue.length != 0){
-                    document.getElementById('submit').disabled == false;
+                    document.getElementById('submit').disabled = false;
                 }
             }
         </script>
@@ -164,21 +163,21 @@
                         <input id="stateList" class="card btn btn-white m-2" type="text" value="" size="60" disabled/>
                                                   
 
-                        <select id="feature1" class="card btn btn-light m-2" name="feature1" >
+                        <select id="feature1" class="card btn btn-light m-2" name="feature1" onchange="enableSubmit(id);">
                             <!--enter feature 1 information here-->
                             {% for feature in features %}
 
-                            <option id = '{{feature}}' value = '{{feature}}' onclick="enableSubmit(id);">{{feature}}</option>
+                            <option id = '{{feature}}' value = '{{feature}}'>{{feature}}</option>
 
                             {% endfor %}
                         </select>
 
-                        <select id="feature2" class="card btn btn-light m-2" name="feature2">
+                        <select id="feature2" class="card btn btn-light m-2" name="feature2" onchange="enableSubmit(id);">
                             <!--enter feature 2 information here-->
 
                             {% for feature in features %}
 
-                            <option id = '{{feature}}' value = '{{feature}}' onclick="enableSubmit(id);">{{feature}}</option>
+                            <option id = '{{feature}}' value = '{{feature}}' >{{feature}}</option>
 
                             {% endfor %}
 
