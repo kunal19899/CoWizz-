@@ -132,15 +132,13 @@
 			<div class="" style="width:100%; ">
 				
 				<div class="border border-dark text-light container-fluid float-left" style="margin-top: 0; width: 18.5%; height: 2.3vw; border-radius: 0px; background-color:#008DC9;">
-					<p style="margin-top:0.15vw">Cumulative <strong>WHO</strong> Update</p>
+					<p style="margin-top:0.15vw"><strong>CDC</strong> Update</p>
 				</div>
 				
 				<div class="border border-dark float-right container-fluid" style="margin-top: 0; width: 81.5%; height: 2.3vw; border-radius: 0px;">
-					<!-- <marquee scrolldelay="10"> -->
-                    <span style="color:black;"><strong>WORLD:</strong></span> <span style="color:#ED7D31;">
-					<strong> <span id="WorldCases"></span></strong></span> | <strong><span style="color:red"><span id="WorldDeath"></span></span></strong> <img src="static/imgs/images/covid-logo.png" height="18vw"> <span style="color:black;"><strong>USA:</strong></span> <span style="color:#ED7D31;">
-                    <strong> <span id="USCases"></span></strong></span> | <strong><span style="color:red"><span id="USDeaths"></span></span></strong> <em>(As of <span id="lastUpdate"></span> )</em>
-                <!-- </marquee> -->
+					<marquee scrolldelay="10"> 
+						<span id="stateData" style="color:#ED7D31;"><strong>{{stateData}}</strong></span> 
+					</marquee>
 				</div>
             </div>
 
