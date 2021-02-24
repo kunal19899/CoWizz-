@@ -25,13 +25,13 @@ def animate():
     inputForm = InputForm()
     states = load_states()
     features = load_features()
-    print(request.form)
     if request.method == "POST":
         ipt = request.form
         for item in ipt:
             if item != 'feature1':
                 stateList.append(ipt[item])
             else: break
+        print(stateList)
         main(stateList, ipt['feature1'], ipt['feature2'])
     return render_template('index.html', form = inputForm, states = states, features=features, link = 'active')
     #############################################################################

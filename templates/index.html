@@ -187,7 +187,8 @@
                             {% endfor %}
 
                         </select>
-                        <select id="stateData" name="stateData" hidden="hidden"></select>
+                        <select id="stateData" class="card btn btn-light m-2" name="stateData" ></select>
+                        
                         <!-- add a submit button here-->
                         <input id="submit" class="btn btn-light m-2" type="submit" value ="Submit" disabled>
                         <!----------------------------->
@@ -329,9 +330,10 @@ $('#submit').click(function(){
 		//alert(stateData);
 	}
 	
-	alert(stateData);
-	//$('#stateData').html(stateData);
-    $('#stateData').html(stateData);
+	alert(stateData); 
+    var select = document.getElementById('stateData');
+    $(select).append('<option value=' + stateData + '>' + stateData + '</option>');
+    $(select).val(stateData);
     
   
    }
