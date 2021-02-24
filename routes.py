@@ -15,8 +15,7 @@ def index():
     inputForm = InputForm()
     states = load_states()
     features = load_features()
-    return render_template("index.html", form = inputForm, states = states, features = features, link = '')
-
+    return render_template("index.html", form = inputForm, states = states, features = features, stateData='', link = '')
 
 @app.route("/animate", methods=['POST'])
 def animate():
@@ -24,16 +23,17 @@ def animate():
     stateList=[]
     inputForm = InputForm()
     states = load_states()
-    features = load_features()
+    features = load_features()    
     print(request.form)
     if request.method == "POST":
-        ipt = request.form
+        ipt = request.form        
         for item in ipt:
             if item != 'feature1':
                 stateList.append(ipt[item])
             else: break
+        stateData=load_states_data(stateList)        
         main(stateList, ipt['feature1'], ipt['feature2'])
-    return render_template('index.html', form = inputForm, states = states, features=features, link = 'active')
+    return render_template('index.html', form = inputForm, states = states, features=features, stateData=stateData, link = 'active')
     #############################################################################
 
 
@@ -50,7 +50,23 @@ def load_features():
     with open('v3/static/features.txt') as fp:
         features = fp.read().replace( '\r', '' ).split( '\n' )
     return features
-
+    
+def load_states_data(stateList):
+    
+    stateData=""
+    for x in range(len(stateList)):    
+        with open('v3/static/CDC-all-states.csv') as csvfile:
+            reader = csv.DictReader(csvfile)
+            #print(stateList[x])
+            deaths=0
+            cases=0
+            for row in reader:
+                if(row['state']==stateList[x]):
+                    deaths=deaths+int(row['deathIncrease'])
+                    cases=cases+int(row['positiveIncrease'])
+            stateData=stateData+stateList[x]+": Cases: "+str(f'{cases:,}')+", Deaths: "+str(f'{deaths:,}')+"|| ";           
+    return stateData
+          
 
 # api functions beyond this point
 

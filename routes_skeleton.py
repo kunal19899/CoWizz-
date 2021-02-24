@@ -15,7 +15,7 @@ def index():
     inputForm = InputForm()
     states = load_states()
     features = load_features()
-    return render_template("index_skeleton.html", form = inputForm, states = states, features = features, link = '')
+    return render_template("index_skeleton.html", form = inputForm, states = states, features = features, stateData='', link = '')
 
 
 @app.route("/animate", methods=['POST'])
@@ -40,7 +40,12 @@ def load_features():
         features = fp.read().replace( '\r', '' ).split( '\n' )
     return features
 
-
+def load_states_data(stateList):
+    ################ Write your code here to load the required csv file and compute the total deaths and cases for states
+    
+    return
+    #################################################################################################################
+    
 # api functions beyond this point
 
 if __name__ == "__main__":
