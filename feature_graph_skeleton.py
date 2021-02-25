@@ -17,15 +17,9 @@ DEFAULT_PLOTLY_COLORS=['rgb(31, 119, 180)', 'rgb(255, 127, 14)',
 class graph_test() :
   # Constructor for routes.py to send/receive data
   #   from this program
-  def __init__( self, state_list, start_date, num_days, feature1, feature2) :
+  def __init__( self, state_list, feature1, feature2) :
     # Stores the states they want to display
     self.states = state_list
-
-    # Stores the date the user wants to start displaying (in YYYY-MM-DD format)
-    self.start = start_date
-
-    # Stores the number of days the user wants to cover
-    self.days = num_days
 
     # Stores the first feature user wants to display
     self.f1 = feature1
@@ -39,12 +33,6 @@ class graph_test() :
 def main() :
   # Write a list of states to see the Covid data of
   state_list = ['TX', 'FL', 'NJ']
-
-  # Write the date you want to start finding the data of
-  start_date = '2021-01-08'
-
-  # Write the number of days you want to explore
-  num_Days = 10
 
   # Write the name first feature you want to find the data of
   feature1 = 'New Cases'
@@ -66,21 +54,32 @@ def main() :
 
 
 #-------------------------------------------------------------
-def feature_graph( states, startDate, numDays, feature1, feature2 ) :
+def feature_graph( states, feature1, feature2 ) :
+
+  #------------------------------------------------------------------------------------
+  # Read CSV file generated from Task 1 using the Pandas library
+  df = ''
+  #------------------------------------------------------------------------------------
+
+  #------------------------------------------------------------------------------------
+  # Count the number of days that are available for each state
+  # Rather than count it manually, use some of Pandas' built-in functions
+  numDays = 0
+  #------------------------------------------------------------------------------------
+
   # frames should correlate to the number of days that pass
   num_frames = numDays
 
   # lines that appear on the graph, should be one per state chosen
   num_traces = []
+  
+  #------------------------------------------------------------------------------------
+  # Uncomment line below and convert the Date column in the CSV from a Datetime object
+  #   to a String object in the form of mm-dd-YYYY format using Pandas
+  #df['Date'] = ''
+  #------------------------------------------------------------------------------------
 
-  # read from CSV in local directory
-  df = pd.read_csv('sample_test.csv')
-
-  # casts the date parameter from the csv into a Date object so it
-  #   can be readable by the program
-  df['date'] = pd.to_datetime(df['date']).dt.strftime('%Y-%m-%d')
-
-  # x & y axis values for each date and feature for both visible graphs 
+  # stores the rows where each state is first used in the CSV file
   axis = []
 
   for i in range(len(st)) :
@@ -89,8 +88,7 @@ def feature_graph( states, startDate, numDays, feature1, feature2 ) :
     num_traces.append( int(i) )
 
     #------------------------------------------------------------------------------------
-    # Use Pandas to find the indexes where the date the state name
-    #   and date align. Update the axis list to include the index
+    # Store the indexes at which the state first appears in the CSV file
     axis.append(i)
     #------------------------------------------------------------------------------------
 
@@ -98,10 +96,10 @@ def feature_graph( states, startDate, numDays, feature1, feature2 ) :
   fig = make_subplots(rows=1, cols=2,
                       specs=[[{"secondary_y": True}, {"secondary_y": True}]])
 
-  for j in range(len(axis)) :
-    # only show the state name at the far right of the drawn line (i.e. trace)
-    all_text = []
+  # only show the state name at the far right of the drawn line (i.e. trace)
+  all_text = []
 
+  for j in range(len(axis)) :
     #------------------------------------------------------------------------------------
     # Update x and y values read from a CSV and store those values 
     #   
@@ -135,13 +133,14 @@ def feature_graph( states, startDate, numDays, feature1, feature2 ) :
     #-------------------------------------------------------------------------------------
   
 
-  # data is a parameter for Plotly's Frame object
-  # it will storedata points what to draw from the dataset
-  data = []
+  frames = []
 
   # want to create enough frames for all the users
   for i in range(num_frames+1) :
+    # data is a parameter for Plotly's Frame object
+    # it will storedata points what to draw from the dataset
     day_data = []
+
     for j in range(len(num_traces)) :    
       #------------------------------------------------------------------------------------
       # Update x and y values read from a CSV and store those values 
@@ -158,21 +157,8 @@ def feature_graph( states, startDate, numDays, feature1, feature2 ) :
  
     # want to make an list of lists to store the different data ranges
     #   to draw from frame to frame
-    data.append(day_data)   
-
-  frames =[go.Frame(data=data[k],
-                    traces=num_traces) for k in range(num_frames+1)]   # define the number of frames
-
-  # will store all the frames where a line is drawn
-  sFrame = []
-
-  # Plotly will take drawing the dot as the first line of input
-  # This will not be considered, we want to start with a line already drawn
-  for i in range(num_frames+1):
-    if i == 0 :
-      sFrame.append(None)
-    else :
-      sFrame.append(frames[i]) 
+    frames.append(go.Frame(data=day_data,
+                           traces=num_traces))
 
   #------------------------------------------------------------------------------------
   # Create an array of date values from the start date up
@@ -190,7 +176,7 @@ def feature_graph( states, startDate, numDays, feature1, feature2 ) :
       label=i,
       #--------------------------------------------------------------------------------
 
-      args = [sFrame[i], dict(frame=dict(duration=500, redraw=False),
+      args = [frames[i], dict(frame=dict(duration=500, redraw=False),
                          transition=dict(duration=0),
                          easing='linear',
                          fromcurrent=True,
