@@ -1,27 +1,22 @@
 from flask import render_template, redirect, request, url_for, session, flash
 import requests
-from v3.forms import InputForm
 from datetime import datetime, timedelta
-from v3.article_search import ArticleSearch
 from flask import Flask
 from v3 import app
 from v3 import static
-from v3.map_test import map_test
 import csv
 from v3.feature_graph import main
 
 @app.route("/")
 def index():
-    inputForm = InputForm()
     states = load_states()
     features = load_features()
-    return render_template("index.html", form = inputForm, states = states, features = features, stateData='', link = '')
+    return render_template("index.html", states = states, features = features, stateData='', link = '')
 
 @app.route("/animate", methods=['POST'])
 def animate():
     ################ complete animate function to parse input here ##############
     stateList=[]
-    inputForm = InputForm()
     states = load_states()
     features = load_features()    
     print(request.form)
@@ -33,7 +28,7 @@ def animate():
             else: break
         stateData=load_states_data(stateList)        
         main(stateList, ipt['feature1'], ipt['feature2'])
-    return render_template('index.html', form = inputForm, states = states, features=features, stateData=stateData, link = 'active')
+    return render_template('index.html', states = states, features=features, stateData=stateData, link = 'active')
     #############################################################################
 
 

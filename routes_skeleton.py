@@ -1,21 +1,17 @@
 from flask import render_template, redirect, request, url_for, session, flash
 import requests
-from v3.forms import InputForm
 from datetime import datetime, timedelta
-from v3.article_search import ArticleSearch
 from flask import Flask
 from v3 import app
 from v3 import static
-from v3.map_test import map_test
 import csv
 from v3.feature_graph import main
 
 @app.route("/")
 def index():
-    inputForm = InputForm()
     states = load_states()
     features = load_features()
-    return render_template("index_skeleton.html", form = inputForm, states = states, features = features, stateData='', link = '')
+    return render_template("index_skeleton.html", states = states, features = features, stateData='', link = '')
 
 
 @app.route("/animate", methods=['POST'])
