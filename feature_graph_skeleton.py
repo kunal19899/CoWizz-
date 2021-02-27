@@ -82,24 +82,35 @@ def feature_graph( states, feature1, feature2 ) :
   # stores the rows where each state is first used in the CSV file
   axis = []
 
+  # finds the index for which row the state appears for the first time in the CSV 
+  strt_idx = 0
+
   for i in range(len(st)) :
     # this value will be used to determine how many lines to draw when the
     #   graph beginning to be generated
     num_traces.append( int(i) )
-
-    #------------------------------------------------------------------------------------
+    
     # Store the indexes at which the state first appears in the CSV file
-    axis.append(i)
-    #------------------------------------------------------------------------------------
-
+    axis.append(int(strt_idx))
+    
+    strt_idx = strt_idx + nDays + 1
+    
   # creates a figure that will store 2 subgraphs, right next to each other 
-  fig = make_subplots(rows=1, cols=2,
+  fig = make_subplots(rows=1, cols=2, horizontal_spacing = 0.075,
                       specs=[[{"secondary_y": True}, {"secondary_y": True}]])
 
   # only show the state name at the far right of the drawn line (i.e. trace)
   all_text = []
 
+  # all the data points will have nothing written on the other points other than
+  #   the most recent data point
+  for k in range(nDays) :
+    all_text.append('')
+
   for j in range(len(axis)) :
+    # represents the index at each iteration, used for convenience
+    cur_idx = axis[j]
+
     #------------------------------------------------------------------------------------
     # Update x and y values read from a CSV and store those values 
     #   
@@ -110,13 +121,10 @@ def feature_graph( states, feature1, feature2 ) :
     y2 = 0
     #------------------------------------------------------------------------------------
 
-
-    #------------------------------------------------------------------------------------
     # Create a way to only write the state's initials at the final
     #   data point and not on each data point, as is done here
     all_text.append(states[j])
-    #------------------------------------------------------------------------------------
-
+    
     # x & y axis values for the first graph (on the left)
     fig.add_trace(go.Scatter(x = x, y = y1, name=states[j],
                              legendgroup=str(j),
@@ -126,14 +134,26 @@ def feature_graph( states, feature1, feature2 ) :
                              textposition='middle right'),
                   row=1, col=1, secondary_y=False)
  
-    #-------------------------------------------------------------------------------------
-    # Repeat process show above but this time to add a trace on
-    #   the second subplot
-    fig.add_trace()
-    #-------------------------------------------------------------------------------------
-  
+    # x & y axis values for the second graph (on the right)
+    fig.add_trace(go.Scatter(x = x, y = y2, name=st[j], 
+                             legendgroup=str(j),
+                             marker=dict(color=DEFAULT_PLOTLY_COLORS[j]),
+                             mode='lines+text',
+                             text=all_text,
+                             textposition='middle right',
+                             showlegend=False),
+                  row=1, col=2, secondary_y=False)
 
+    # remove the name at the end of the list to make way for the name state chosen
+    all_text.pop()  
+
+  # data is a parameter for Plotly's Frame object
+  # it will determine what do draw from the given range in the dataset
   frames = []
+
+  # Update the number of traces by two since there are two graphs
+  for i in range(len(num_traces), len(num_traces)*2) :
+    num_traces.append( int(i) )
 
   # want to create enough frames for all the users
   for i in range(num_frames+1) :
@@ -141,7 +161,9 @@ def feature_graph( states, feature1, feature2 ) :
     # it will storedata points what to draw from the dataset
     day_data = []
 
-    for j in range(len(num_traces)) :    
+    for j in range(len(num_traces)) :
+      cur_idx = axis[j]
+
       #------------------------------------------------------------------------------------
       # Update x and y values read from a CSV and store those values 
       #   
@@ -157,8 +179,15 @@ def feature_graph( states, feature1, feature2 ) :
  
     # want to make an list of lists to store the different data ranges
     #   to draw from frame to frame
-    frames.append(go.Frame(data=day_data,
-                           traces=num_traces))
+    if i == 0 :
+      frames.append(go.Frame(data=None,
+                             traces=num_traces))
+
+    # Plotly will take drawing the dot as the first line of input
+    # This will not be considered, we want to start with a line already drawn
+    else :
+      frames.append(go.Frame(data=day_data,
+                             traces=num_traces))
 
   #------------------------------------------------------------------------------------
   # Create an array of date values from the start date up
@@ -187,7 +216,7 @@ def feature_graph( states, feature1, feature2 ) :
   # Creates button objects to be interactive with the slider
   play_button = dict(label='Play',
                      method='animate',
-                     args=[None, dict(frame=dict(duration=500, redraw=False),
+                     args=[None, dict(frame=dict(duration=0, redraw=False),
                                           transition=dict(duration=0),
                                           easing='linear',
                                           fromcurrent=True,
@@ -201,13 +230,16 @@ def feature_graph( states, feature1, feature2 ) :
 
   sliders = [dict(yanchor = 'top',
                   xanchor = 'left',
-                  currentvalue = {'font': {'size': 20},'prefix': 'Date: ','visible': True,'xanchor': 'right'},
+                  currentvalue = {'font': {'size': 15},'prefix': 'Date: ','visible': True,'xanchor': 'right'},
                   transition = {'duration': 0, 'easing': 'linear'},
                   pad = {'b': 10, 't': 50},
-                  len = 0.9,
+                  len = 0.8,
                   x = 0.1,
-                  y = 0,
+                  y = -0.15,
+                  #---------------------------------------------------------------------
+                  # Add the steps variable once the variable is complete
                   steps = []
+                  #---------------------------------------------------------------------
             )]
 
   fig.frames=frames
@@ -218,8 +250,31 @@ def feature_graph( states, feature1, feature2 ) :
                                       xanchor='right',
                                       yanchor='top',
                                       buttons=[play_button, pause_button])],
-                    sliders=sliders)
+                    sliders=sliders,
+                    legend=dict(orientation='h',
+                                yanchor='bottom',
+                                y=1.02,
+                                xanchor='right',
+                                x=0.58,
+                                title=dict(text='State(s):'),
+                                valign='middle'
+                                ),
+                    height=550,
+                    width=1500
+                    )
 
+  #------------------------------------------------------------------------------------
+  # Update the x-axes to start from the first available date and end with the most
+  #   recent date of data collected (i.e. update the 0s and 1s with the date list
+  #   we made above)
+  fig.update_xaxes(range=[ 0, 
+                           1 ],
+                   row=1, col=1)
+
+  fig.update_xaxes(range=[ 0, 
+                           1 ],
+                   row=1, col=2)
+  #------------------------------------------------------------------------------------
 
   #------------------------------------------------------------------------------------
   # Update the y-axes to include the names of the features

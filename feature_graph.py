@@ -21,8 +21,8 @@ class graph_test() :
     # Stores the states they want to display
     self.states = state_list
 
-    # Stores the date the user wants to start displaying (in YYYY-MM-DD format)
-    self.start = start_date 
+    # Stores the number of days the user wants to cover
+    self.start = start_date
 
     # Stores the number of days the user wants to cover
     self.days = int(num_days)
@@ -41,8 +41,7 @@ def main(states, fe1, fe2) :
   with open( 'v3/static/features.txt', 'r' ) as fp :
       features = fp.read().replace( '\r', '' ).split( '\n' )
 
-  nGraph = graph_test( states, '2021-01-08', 10, 
-                       fe1, fe2 )
+  nGraph = graph_test( states, '01-08-2021', 10, fe1, fe2 )
 
   fig = feature_graph(nGraph.states, nGraph.start, nGraph.days, 
                       nGraph.f1, nGraph.f2)
