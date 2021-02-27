@@ -2,7 +2,6 @@ import plotly
 import plotly.io as pio
 import plotly.graph_objects as go
 import pandas as pd
-import numpy as np
 from plotly.subplots import make_subplots
 
 # list of default Plotly colors to color a trace with
@@ -46,7 +45,7 @@ def main() :
   fig = ''
   
   # Uncomment line below once the fig object is returned from feature_graph() 
-  # pio.write_html(fig, file='workshop_graph.html', auto_open=False)
+  #pio.write_html(fig, file='workshop_graph.html', auto_open=False)
   #-------------------------------------------------------------------------------------
 
 
@@ -83,7 +82,7 @@ def feature_graph( states, feature1, feature2 ) :
   # finds the index for which row the state appears for the first time in the CSV 
   strt_idx = 0
 
-  for i in range(len(st)) :
+  for i in range(len(states)) :
     # this value will be used to determine how many lines to draw when the
     #   graph beginning to be generated
     num_traces.append( int(i) )
@@ -91,18 +90,18 @@ def feature_graph( states, feature1, feature2 ) :
     # Store the indexes at which the state first appears in the CSV file
     axis.append(int(strt_idx))
     
-    strt_idx = strt_idx + nDays + 1
+    strt_idx = strt_idx + numDays + 1
     
   # creates a figure that will store 2 subgraphs, right next to each other 
   fig = make_subplots(rows=1, cols=2, horizontal_spacing = 0.075,
                       specs=[[{"secondary_y": True}, {"secondary_y": True}]])
-
+  
   # only show the state name at the far right of the drawn line (i.e. trace)
   all_text = []
 
   # all the data points will have nothing written on the other points other than
   #   the most recent data point
-  for k in range(nDays) :
+  for k in range(numDays) :
     all_text.append('')
 
   for j in range(len(axis)) :
@@ -159,7 +158,7 @@ def feature_graph( states, feature1, feature2 ) :
     # it will storedata points what to draw from the dataset
     day_data = []
 
-    for j in range(len(num_traces)) :
+    for j in range(len(states)) :
       cur_idx = axis[j]
 
       #------------------------------------------------------------------------------------
@@ -171,9 +170,10 @@ def feature_graph( states, feature1, feature2 ) :
       y1 = 0
       y2 = 0
       #------------------------------------------------------------------------------------
-
+      
       day_data.append(go.Scatter(x=x, y=y1,visible=True))
       day_data.append(go.Scatter(x=x, y=y2,visible=True))
+      
  
     # want to make an list of lists to store the different data ranges
     #   to draw from frame to frame
@@ -239,11 +239,11 @@ def feature_graph( states, feature1, feature2 ) :
                   steps = []
                   #---------------------------------------------------------------------
             )]
-
+  
   fig.frames=frames
   fig.update_layout(updatemenus=[dict(type='buttons',
                                       showactive=False,
-                                      y=-0.1,
+                                      y=-0.35,
                                       x=0.05,
                                       xanchor='right',
                                       yanchor='top',
