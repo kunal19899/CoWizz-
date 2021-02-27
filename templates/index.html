@@ -148,7 +148,7 @@
             <!-----------------------Edit the input bar here -------------------------------->
             <div class="container-fluid ">
                 <div class="card-deck bg-secondary p-3">
-                    <form class="container" action="animate" method="POST" novalidate> <!--connect form to "animate"
+                    <form class="container-fluid" action="animate" method="POST" novalidate> <!--connect form to "animate"
                          function on this line-->
                         <button class=" btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                             Select upto 5 states...
@@ -163,14 +163,14 @@
 
                         </div>
                         
-                        <input id="stateList" class="card btn btn-white m-2" type="text" value="" size="60" disabled/>
+                        <input id="stateList" class="card btn btn-white m-2" type="text" value="" size="80" disabled/>
                                                   
 
                         <select id="feature1" class="card btn btn-light m-2" name="feature1" onchange="enableSubmit(id);">
                             <!--enter feature 1 information here-->
                             {% for feature in features %}
 
-                            <option id = '{{feature}}' value = '{{feature}}'>{{feature}}</option>
+                            <option id = '{{feature}}' value = '{{feature}}'>{{features[feature]}}</option>
 
                             {% endfor %}
                         </select>
@@ -180,7 +180,7 @@
 
                             {% for feature in features %}
 
-                            <option id = '{{feature}}' value = '{{feature}}' >{{feature}}</option>
+                            <option id = '{{feature}}' value = '{{feature}}' >{{features[feature]}}</option>
 
                             {% endfor %}
 

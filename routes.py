@@ -42,9 +42,13 @@ def load_states():
     return states_names
 
 def load_features():
-    with open('v3/static/features.txt') as fp:
-        features = fp.read().replace( '\r', '' ).split( '\n' )
-    return features
+    features_names = {}
+    with open('v3/static/features.csv') as fp:
+        features = csv.reader(fp, delimiter=',')
+        for item, name in features:
+            features_names[item] = name
+
+    return features_names
     
 def load_states_data(stateList):
     

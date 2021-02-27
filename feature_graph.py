@@ -38,8 +38,6 @@ class graph_test() :
 
 def main(states, fe1, fe2) :
   # Read a file with a list of all the known features CoWiz supports
-  with open( 'v3/static/features.txt', 'r' ) as fp :
-      features = fp.read().replace( '\r', '' ).split( '\n' )
 
   nGraph = graph_test( states, '01-08-2021', 10, fe1, fe2 )
 

@@ -5,6 +5,6 @@ app = Flask(__name__)
 app.config["DEBUG"] = True
 app.config.from_object(Config)
 
-from v3 import routes_skeleton
+from v3 import routes
 
 
