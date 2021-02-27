@@ -1,10 +1,8 @@
 import plotly
-import plotly.express as px
 import plotly.io as pio
 import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
-import os
 from plotly.subplots import make_subplots
 
 # list of default Plotly colors to color a trace with
