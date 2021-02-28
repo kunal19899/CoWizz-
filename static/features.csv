@@ -1,13 +1,13 @@
-"Select Feature","Select Feature"
-"daily_vaccinations","Daily Vaccinations"
-"daily_vaccinations_per_million","Daily Vaccinations / Mill"
-"positiveIncrease","+ve Increase"
-"hospitalizedIncrease","Hospitalized Increase"
-"deathIncrease","Death Increase"
-"totalTestResultsIncrease","Test Results Increase"
-"Population Staying at Home","Population at Home"
-"Number of Trips","# of trips"
-"Number of Trips 500miles","# of trips 500"
-"retail_and_recreation_percent_change_from_baseline","Retail and Rec. % change"
-"workplaces_percent_change_from_baseline","Workplace % change"
-"residential_percent_change_from_baseline","Residential % change"
+Select Feature,Select Feature
+positiveIncrease,New Cases
+deathIncrease,New Deaths
+hospitalizedIncrease,New Hospitalizations
+totalTestResultsIncrease,New Tests
+daily_vaccinations,New Vaccinations
+daily_vaccinations_per_million,New Vaccinations / Million
+Population Staying at Home,Population at Home
+Number of Trips,New Trips
+Number of Trips 500miles,New 500 mile Trips
+retail_and_recreation_percent_change_from_baseline,Mobility %Change: Retail/Recreation
+workplaces_percent_change_from_baseline,Mobility %Change: Workplaces
+residential_percent_change_from_baseline,Mobility %Change: Residential Areas
