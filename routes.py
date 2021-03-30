@@ -11,24 +11,30 @@ from v3.feature_graph import main
 def index():
     states = load_states()
     features = load_features()
-    return render_template("index.html", states = states, features = features, stateData='', link = '')
+    return render_template("index.html", states = states, features = features, stateData='', link = '', 
+                            statePreview='', f1='', f2='', stateList = [])
 
 @app.route("/animate", methods=['POST'])
 def animate():
     ################ complete animate function to parse input here ##############
-    stateList=[]
     states = load_states()
-    features = load_features()    
-    print(request.form)
+    features = load_features()
+    stateList = []
+    abbrList = []
     if request.method == "POST":
-        ipt = request.form        
+        ipt = request.form
         for item in ipt:
             if item != 'feature1':
                 stateList.append(ipt[item])
+                abbrList.append(states[ipt[item]])
             else: break
-        stateData=load_states_data(stateList)        
-        main(stateList, ipt['feature1'], ipt['feature2'])
-    return render_template('index.html', states = states, features=features, stateData=stateData, link = 'active')
+        # main(stateList, ipt['feature1'], ipt['feature2'])
+        feature1 = ipt['feature1']
+        feature2 = ipt['feature2']
+        statePreview = ', '.join(stateList)
+        stateData = load_states_data(abbrList)
+    return render_template('index.html', states=states, features=features, stateData = stateData, link = 'active', 
+                            statePreview=statePreview, f1=feature1, f2=feature2, stateList=stateList)
     #############################################################################
 
 

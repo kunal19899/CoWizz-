@@ -49,7 +49,6 @@ def main(states, fe1, fe2) :
   
   pio.write_html(fig, file=link_name, auto_open=False)
 
-  return link_name
 
 
 #-------------------------------------------------------------

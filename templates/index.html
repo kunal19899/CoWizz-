@@ -156,22 +156,34 @@
                         <div class="dropdown-menu" style="overflow-y:scroll; height: 500spx">
                             <!--enter state information here as a dropdown-->
                             {% for state in states.keys() %}
+                            <!-- {% if state in stateList %}
 
-                            <input id ="{{state}}" name="{{state}}" class="m-1 " type="checkbox" value="{{states[state]}}" onclick="countStates(id, value); enableSubmit(id);">{{state}}<br/>
+                            <input id ="{{state}}" name="{{state}}" class="m-1 " type="checkbox" value="{{state}}" onclick="countStates(id, value); enableSubmit(id);" checked>{{state}}<br/>
 
+                            {% else %} -->
+
+                            <input id ="{{state}}" name="{{state}}" class="m-1 " type="checkbox" value="{{state}}" onclick="countStates(id, value); enableSubmit(id);">{{state}}<br/>
+
+                            <!-- {% endif %} -->
                             {% endfor %}
 
                         </div>
                         
-                        <input id="stateList" class="card btn btn-white m-2" type="text" value="" size="60" disabled/>
+                        <input id="stateList" class="card btn btn-white m-2" type="text" value="{{statePreview}}" size="60" disabled/>
                                                   
 
                         <select id="feature1" class="card btn btn-light m-2" name="feature1" onchange="enableSubmit(id);">
                             <!--enter feature 1 information here-->
                             {% for feature in features %}
+                            {% if feature == f1 %}
+
+                            <option id = '{{feature}}' value = '{{feature}}' selected>{{features[feature]}}</option>
+
+                            {% else %}
 
                             <option id = '{{feature}}' value = '{{feature}}'>{{features[feature]}}</option>
-
+                            
+                            {% endif %}
                             {% endfor %}
                         </select>
 
@@ -179,9 +191,15 @@
                             <!--enter feature 2 information here-->
 
                             {% for feature in features %}
+                            {% if feature == f2 %}
 
-                            <option id = '{{feature}}' value = '{{feature}}' >{{features[feature]}}</option>
+                            <option id = '{{feature}}' value = '{{feature}}' selected>{{features[feature]}}</option>
 
+                            {% else %}
+
+                            <option id = '{{feature}}' value = '{{feature}}'>{{features[feature]}}</option>
+                            
+                            {% endif %}
                             {% endfor %}
 
                         </select>
