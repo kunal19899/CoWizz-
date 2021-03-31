@@ -37,7 +37,7 @@ fig <- fig %>% animation_button(
   x = 1, xanchor = "right", y = 0, yanchor = "bottom"
 )
 
-saveWidget(fig, 'graphtest_final.html', selfcontained = F, libdir = 'lib')
+saveWidget(fig, 'static/animations/graphtest_final.html', selfcontained = F, libdir = 'lib')
 
 end.time <- Sys.time()
 time.taken <- end.time - start.time
