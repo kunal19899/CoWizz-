@@ -29,6 +29,10 @@ def animate():
                 abbrList.append(states[ipt[item]])
             else: break
         # main(stateList, ipt['feature1'], ipt['feature2'])
+        ######
+            #r coding 
+            #user_state_function()
+        ######
         feature1 = ipt['feature1']
         feature2 = ipt['feature2']
         statePreview = ', '.join(stateList)
