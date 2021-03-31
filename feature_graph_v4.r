@@ -1,7 +1,5 @@
 library(plotly)
 
-start.time <- Sys.time()
-
 # list of default Plotly colors to color a trace with
 DEFAULT_PLOTLY_COLORS=c('rgb(31, 119, 180)', 'rgb(255, 127, 14)',
                         'rgb(44, 160, 44)', 'rgb(214, 39, 40)',
@@ -18,83 +16,84 @@ accumulate_by <- function(dat, var) {
   dplyr::bind_rows(dats)
 }
 
-# hardcoded values for the states and features we want
-#st <- c('Texas', 'Florida', 'New Jersey','Illinois','New Hampshire')
-st <- c('Texas', 'Florida')
-fe1 <- 'grocery_and_pharmacy_percent_change_from_baseline'
-fe2 <- 'workplaces_percent_change_from_baseline'
+main <- function(st, fe1, fe2) {
+  # hardcoded values for the states and features we want
+  #st <- c('Texas', 'Florida', 'New Jersey','Illinois','New Hampshire')
+  st <- c('Texas', 'Florida')
+  fe1 <- 'grocery_and_pharmacy_percent_change_from_baseline'
+  fe2 <- 'workplaces_percent_change_from_baseline'
 
-# retrieve values from the COVID csv file
-df <- read.csv(file = 'Feb20-USStates-CovidData.csv')
+  # retrieve values from the COVID csv file
+  df <- read.csv(file = 'Feb20-USStates-CovidData.csv')
 
-# store list of all the days each state covers
-dayList <- unique(df$Date)
+  # store list of all the days each state covers
+  dayList <- unique(df$Date)
 
-# change format of dates from a Date object mm-dd-yy to a String object yyyy-mm-dd
-df$Date <- strptime(as.character(df$Date), '%m/%d/%y')
-df$Date <- format(df$Date, '%Y/%m/%d')
+  # change format of dates from a Date object mm-dd-yy to a String object yyyy-mm-dd
+  df$Date <- strptime(as.character(df$Date), '%m/%d/%y')
+  df$Date <- format(df$Date, '%Y/%m/%d')
 
-df_sub <- df %>% subset(State %in% st, select=c(State,Date,get(fe1),get(fe2)))
-fig <- df_sub %>% accumulate_by(~Date)
+  df_sub <- df %>% subset(State %in% st, select=c(State,Date,get(fe1),get(fe2)))
+  fig <- df_sub %>% accumulate_by(~Date)
 
-fig_min_x <- df_sub[1,2]
-fig_max_x <- tail(df_sub[,2], n=1)
-#fig1_min_y <- min(df_sub$get(fe1))
-#fig1_max_y <- max(df_sub$get(fe1))
+  fig_min_x <- df_sub[1,2]
+  fig_max_x <- tail(df_sub[,2], n=1)
+  #fig1_min_y <- min(df_sub$get(fe1))
+  #fig1_max_y <- max(df_sub$get(fe1))
 
-fig1 <- fig %>%
-  plot_ly(
-    x = ~Date, 
-    y = ~get(fe1),
-    split = ~State,
-    frame = ~frame, 
-    type = 'scatter',
-    mode = 'lines', 
-    line = list(simplyfy = F,
-                color=DEFAULT_PLOTLY_COLORS[which(st == ~State)]),
-    legendgroup=~State
-    #legendgroup=DEFAULT_PLOTLY_COLORS[which(st == ~State) - length(st)]
+  fig1 <- fig %>%
+    plot_ly(
+      x = ~Date, 
+      y = ~get(fe1),
+      split = ~State,
+      frame = ~frame, 
+      type = 'scatter',
+      mode = 'lines', 
+      line = list(simplyfy = F,
+                  color=DEFAULT_PLOTLY_COLORS[which(st == ~State)]),
+      legendgroup=~State
+      #legendgroup=DEFAULT_PLOTLY_COLORS[which(st == ~State) - length(st)]
+    )
+  fig2 <- fig %>%
+    plot_ly(
+      x = ~Date, 
+      y = ~get(fe2),
+      split = ~State,
+      frame = ~frame, 
+      type = 'scatter',
+      mode = 'lines', 
+      line = list(simplyfy = F,
+                  #color=DEFAULT_PLOTLY_COLORS[which(st == ~State)])
+                  color=DEFAULT_PLOTLY_COLORS[which(st == ~State)]),
+      legendgroup=~State,
+      showlegend=FALSE
+    )
+
+  fig1 <- fig1 %>% layout(
+    xaxis = list(
+      title = 'Date',
+      #range = c(as.numeric(as.POSIXct(fig_min_x, format="%Y/%m/%d"))*1000, 
+      #          as.numeric(as.POSIXct(fig_max_x, format="%Y/%m/%d"))*1000),
+      zeroline = F
+    ),
+    yaxis = list(
+      zeroline = F
+      #range = c(fig1_min_y, fig1_max_y)
+    )
   )
-fig2 <- fig %>%
-  plot_ly(
-    x = ~Date, 
-    y = ~get(fe2),
-    split = ~State,
-    frame = ~frame, 
-    type = 'scatter',
-    mode = 'lines', 
-    line = list(simplyfy = F,
-                #color=DEFAULT_PLOTLY_COLORS[which(st == ~State)])
-                color=DEFAULT_PLOTLY_COLORS[which(st == ~State)]),
-    legendgroup=~State,
-    showlegend=FALSE
+  fig2 <- fig2 %>% layout(
+    xaxis = list(
+      title = 'Date',
+      #range = c(as.numeric(as.POSIXct(fig_min_x, format="%Y/%m/%d"))*1000, 
+      #          as.numeric(as.POSIXct(fig_max_x, format="%Y/%m/%d"))*1000),
+      zeroline = F
+    ),
+    yaxis = list(
+      zeroline = F
+      #range = c(fig1_min_y, fig1_max_y)
+    )
   )
 
-fig1 <- fig1 %>% layout(
-  xaxis = list(
-    title = 'Date',
-    #range = c(as.numeric(as.POSIXct(fig_min_x, format="%Y/%m/%d"))*1000, 
-    #          as.numeric(as.POSIXct(fig_max_x, format="%Y/%m/%d"))*1000),
-    zeroline = F
-  ),
-  yaxis = list(
-    zeroline = F
-    #range = c(fig1_min_y, fig1_max_y)
-  )
-)
-fig2 <- fig2 %>% layout(
-  xaxis = list(
-    title = 'Date',
-    #range = c(as.numeric(as.POSIXct(fig_min_x, format="%Y/%m/%d"))*1000, 
-    #          as.numeric(as.POSIXct(fig_max_x, format="%Y/%m/%d"))*1000),
-    zeroline = F
-  ),
-  yaxis = list(
-    zeroline = F
-    #range = c(fig1_min_y, fig1_max_y)
-  )
-)
-
-end.time <- Sys.time()
-time.taken <- end.time - start.time
-print(time.taken)
+  saveRDS(fig, file = 'fig1.rds')
+  saveRDS(fig, file = 'fig2.rds')
+}
