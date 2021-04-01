@@ -6,9 +6,19 @@ from v3 import app
 from v3 import static
 import csv
 from v3.feature_graph import main
+import pandas as pd
+# from r_functions import create, run
+import rpy2.robjects as robjects
+from rpy2.robjects.packages import importr
+from rpy2.robjects import pandas2ri
+from rpy2.robjects.packages import STAP
+
+
+
 
 @app.route("/")
 def index():
+    # print(rpy2.__version__)
     states = load_states()
     features = load_features()
     return render_template("index.html", states = states, features = features, stateData='', link = '', 
@@ -20,7 +30,9 @@ def animate():
     states = load_states()
     features = load_features()
     stateList = []
+    stateData = ''
     abbrList = []
+    base = importr('base')
     if request.method == "POST":
         ipt = request.form
         for item in ipt:
@@ -31,12 +43,24 @@ def animate():
         # main(stateList, ipt['feature1'], ipt['feature2'])
         ######
             #r coding 
+        with open('/Users/kunalsamant/Documents/UTA/ITLab/COVID-19 visualisation/v3/feature_graph_v4.R', 'r') as f:
+            string = f.read()
+        main = STAP(string, "main")
+        result1 = main.main()
+        with open('/Users/kunalsamant/Documents/UTA/ITLab/COVID-19 visualisation/v3/user_states_graph_fix.R', 'r') as f:
+            string = f.read()
+        display = STAP(string, "main")
+        result2 = display.main()
+        # print(result)
+            
+
+            
             #user_state_function()
         ######
         feature1 = ipt['feature1']
         feature2 = ipt['feature2']
         statePreview = ', '.join(stateList)
-        stateData = load_states_data(abbrList)
+        # stateData = load_states_data(abbrList)
     return render_template('index.html', states=states, features=features, stateData = stateData, link = 'active', 
                             statePreview=statePreview, f1=feature1, f2=feature2, stateList=stateList)
     #############################################################################

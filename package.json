@@ -13,6 +13,7 @@
     "bootstrap": "^5.0.0-beta2",
     "bootstrap-select": "^1.13.18",
     "jquery": "^3.5.1",
-    "popper": "^1.0.1"
+    "popper": "^1.0.1",
+    "r": "^0.0.5"
   }
 }

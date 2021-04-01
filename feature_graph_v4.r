@@ -15,16 +15,21 @@ accumulate_by <- function(dat, var) {
   })
   dplyr::bind_rows(dats)
 }
-
-main <- function(st, fe1, fe2) {
+#st, fe1, fe2
+add <- function(a, b) {
+  # print("hello")
+  return(a + b)
+}
+main <- function() {
   # hardcoded values for the states and features we want
   #st <- c('Texas', 'Florida', 'New Jersey','Illinois','New Hampshire')
+  start.time <- Sys.time()
   st <- c('Texas', 'Florida')
   fe1 <- 'grocery_and_pharmacy_percent_change_from_baseline'
   fe2 <- 'workplaces_percent_change_from_baseline'
 
   # retrieve values from the COVID csv file
-  df <- read.csv(file = 'Feb20-USStates-CovidData.csv')
+  df <- read.csv(file = '/Users/kunalsamant/Documents/UTA/ITLab/COVID-19 visualisation/v3/Feb20-USStates-CovidData.csv')
 
   # store list of all the days each state covers
   dayList <- unique(df$Date)
@@ -33,16 +38,17 @@ main <- function(st, fe1, fe2) {
   df$Date <- strptime(as.character(df$Date), '%m/%d/%y')
   df$Date <- format(df$Date, '%Y/%m/%d')
 
-  df_sub <- df %>% subset(State %in% st, select=c(State,Date,get(fe1),get(fe2)))
-  fig <- df_sub %>% accumulate_by(~Date)
+  df_sub <- subset(df, State %in% st, select=c(State,Date,get(fe1),get(fe2)))
+  fig <- accumulate_by(df_sub, ~Date)
 
   fig_min_x <- df_sub[1,2]
   fig_max_x <- tail(df_sub[,2], n=1)
   #fig1_min_y <- min(df_sub$get(fe1))
   #fig1_max_y <- max(df_sub$get(fe1))
 
-  fig1 <- fig %>%
+  fig1 <- 
     plot_ly(
+      fig,
       x = ~Date, 
       y = ~get(fe1),
       split = ~State,
@@ -54,8 +60,9 @@ main <- function(st, fe1, fe2) {
       legendgroup=~State
       #legendgroup=DEFAULT_PLOTLY_COLORS[which(st == ~State) - length(st)]
     )
-  fig2 <- fig %>%
+  fig2 <- 
     plot_ly(
+      fig,
       x = ~Date, 
       y = ~get(fe2),
       split = ~State,
@@ -69,7 +76,7 @@ main <- function(st, fe1, fe2) {
       showlegend=FALSE
     )
 
-  fig1 <- fig1 %>% layout(
+  fig1 <- layout(fig1,
     xaxis = list(
       title = 'Date',
       #range = c(as.numeric(as.POSIXct(fig_min_x, format="%Y/%m/%d"))*1000, 
@@ -81,7 +88,7 @@ main <- function(st, fe1, fe2) {
       #range = c(fig1_min_y, fig1_max_y)
     )
   )
-  fig2 <- fig2 %>% layout(
+  fig2 <- layout(fig2,
     xaxis = list(
       title = 'Date',
       #range = c(as.numeric(as.POSIXct(fig_min_x, format="%Y/%m/%d"))*1000, 
@@ -93,7 +100,9 @@ main <- function(st, fe1, fe2) {
       #range = c(fig1_min_y, fig1_max_y)
     )
   )
-
-  saveRDS(fig, file = 'fig1.rds')
-  saveRDS(fig, file = 'fig2.rds')
+  saveRDS(fig1, file = 'v3/fig1.rds')
+  saveRDS(fig2, file = 'v3/fig2.rds')
+  end.time <- Sys.time()
+  time.taken <- end.time - start.time
+  print(time.taken)
 }
