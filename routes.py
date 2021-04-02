@@ -40,13 +40,15 @@ def animate():
                 stateList.append(ipt[item])
                 abbrList.append(states[ipt[item]])
             else: break
+        feature1 = ipt['feature1']
+        feature2 = ipt['feature2']
         # main(stateList, ipt['feature1'], ipt['feature2'])
         ######
             #r coding 
         with open('/Users/kunalsamant/Documents/UTA/ITLab/COVID-19 visualisation/v3/feature_graph_v4.R', 'r') as f:
             string = f.read()
         main = STAP(string, "main")
-        result1 = main.main()
+        result1 = main.main(stateList, feature1, feature2)
         with open('/Users/kunalsamant/Documents/UTA/ITLab/COVID-19 visualisation/v3/user_states_graph_fix.R', 'r') as f:
             string = f.read()
         display = STAP(string, "main")
@@ -57,8 +59,7 @@ def animate():
             
             #user_state_function()
         ######
-        feature1 = ipt['feature1']
-        feature2 = ipt['feature2']
+        
         statePreview = ', '.join(stateList)
         # stateData = load_states_data(abbrList)
     return render_template('index.html', states=states, features=features, stateData = stateData, link = 'active', 

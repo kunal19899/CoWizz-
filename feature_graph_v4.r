@@ -16,17 +16,14 @@ accumulate_by <- function(dat, var) {
   dplyr::bind_rows(dats)
 }
 #st, fe1, fe2
-add <- function(a, b) {
-  # print("hello")
-  return(a + b)
-}
-main <- function() {
+
+main <- function(st, fe1, fe2) {
   # hardcoded values for the states and features we want
   #st <- c('Texas', 'Florida', 'New Jersey','Illinois','New Hampshire')
   start.time <- Sys.time()
-  st <- c('Texas', 'Florida')
-  fe1 <- 'grocery_and_pharmacy_percent_change_from_baseline'
-  fe2 <- 'workplaces_percent_change_from_baseline'
+  # st <- c('Texas', 'Florida', 'New York', 'California', 'Missouri')
+  # fe1 <- 'grocery_and_pharmacy_percent_change_from_baseline'
+  # fe2 <- 'workplaces_percent_change_from_baseline'
 
   # retrieve values from the COVID csv file
   df <- read.csv(file = '/Users/kunalsamant/Documents/UTA/ITLab/COVID-19 visualisation/v3/Feb20-USStates-CovidData.csv')
