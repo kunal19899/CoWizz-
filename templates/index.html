@@ -68,6 +68,32 @@
         .btn.dropdown-toggle:focus {
             outline: none !important;
         }
+
+        .iframe{
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            padding-top: 40%;
+        }
+
+        .iframe-default{
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            padding-top: 31%;
+        }
+
+        .responsive-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+        }
         
         </style>
         <script type='text/javascript'>
@@ -217,14 +243,14 @@
             <!-- Insert Iframe here  -->
             {% if link %}
 
-            <div class="embed-responsive embed-responsive-16by9 text-center m-1 " style="">
-                <iframe src="{{ url_for('static', filename='animations/graphtest_final.html') }}" width="100%;" class="embed-responsive-item" allowfullscreen></iframe>
+            <div class="iframe" style="">
+                <iframe src="{{ url_for('static', filename='animations/graphtest_final.html') }}" width="100%;" class="responsive-iframe" allowfullscreen></iframe>
             </div>
 
             {% else %}
 
-            <div class="embed-responsive embed-responsive-16by9 text-center m-1 " style="">
-                <iframe src="{{ url_for('static', filename='animations/workshop_graph.html') }}" width="100%;" class="embed-responsive-item" allowfullscreen></iframe>
+            <div class="iframe-default" style="">
+                <iframe src="{{ url_for('static', filename='animations/workshop_graph.html') }}" width="100%;" class="responsive-iframe" allowfullscreen></iframe>
             </div>
 
             {% endif %}

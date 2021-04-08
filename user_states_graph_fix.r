@@ -1,7 +1,7 @@
 library(plotly)
 library(htmlwidgets)
 
-main <- function(fig1_nm = "v3/fig1.rds", fig2_nm = "v3/fig2.rds") {
+main <- function(fe1, fe2, fig1_nm = "v3/fig1.rds", fig2_nm = "v3/fig2.rds") {
   start.time <- Sys.time()
   fig1 <- readRDS(file = fig1_nm)
   fig2 <- readRDS(file = fig2_nm)
@@ -17,8 +17,8 @@ main <- function(fig1_nm = "v3/fig1.rds", fig2_nm = "v3/fig2.rds") {
                   title=list(text='State(s):'),
                   valign='middle'
                   ),
-      annotations = list(list(x = 0.125, y = 1.05, text = "FE1", showarrow = F, xref='paper', yref='paper'),
-                        list(x = 0.875, y = 1.05, text = "FE2", showarrow = F, xref='paper', yref='paper')),
+      annotations = list(list(x = 0.125, y = 1.05, text = fe1, showarrow = F, xref='paper', yref='paper'),
+                        list(x = 0.875, y = 1.05, text = fe2, showarrow = F, xref='paper', yref='paper')),
       autosize = FALSE,
       height=550,
       width=1400)
