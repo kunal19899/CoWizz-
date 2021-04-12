@@ -18,6 +18,8 @@ accumulate_by <- function(dat, var) {
 #st, fe1, fe2
 
 main <- function(st, fe1, fe2) {
+  print(fe1)
+  print(fe2)
   # hardcoded values for the states and features we want
   #st <- c('Texas', 'Florida', 'New Jersey','Illinois','New Hampshire')
   start.time <- Sys.time()

@@ -1,4 +1,4 @@
-State,Date,daily_vaccinations_per_million,positiveIncrease,deathIncrease,Number of Trips,retail_and_recreation_percent_change_from_baseline,grocery_and_pharmacy_percent_change_from_baseline,parks_percent_change_from_baseline,transit_stations_percent_change_from_baseline,workplaces_percent_change_from_baseline,residential_percent_change_from_baseline
+State,Date,daily_vaccinations_per_million,positiveIncrease,deathIncrease,NumberofTrips,retail_and_recreation_percent_change_from_baseline,grocery_and_pharmacy_percent_change_from_baseline,parks_percent_change_from_baseline,transit_stations_percent_change_from_baseline,workplaces_percent_change_from_baseline,residential_percent_change_from_baseline
 Mississippi,2/1/20,,,,9607716,,,,,,
 Mississippi,2/2/20,,,,8609297,,,,,,
 Mississippi,2/3/20,,,,10022434,,,,,,
