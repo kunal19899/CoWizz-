@@ -84,8 +84,9 @@ main <- function(st, fe1, fe2) {
   fig2_min_y <- min(df_sub[[fe2]])
   fig2_max_y <- max(df_sub[[fe2]])
 
-  fig1 <- fig %>%
+  fig1 <-
     plot_ly(
+      fig,
       x = ~Date, 
       y = ~get(fe1),
       split = ~State,
@@ -100,8 +101,9 @@ main <- function(st, fe1, fe2) {
       line = list(simplyfy = F),
       legendgroup=~State
     )
-  fig2 <- fig %>% 
+  fig2 <-
     plot_ly(
+      fig,
       x = ~Date, 
       y = ~get(fe2),
       split = ~State,
@@ -118,7 +120,8 @@ main <- function(st, fe1, fe2) {
       showlegend=FALSE
     )
 
-  fig1 <- fig1 %>% layout(
+  fig1 <- layout(
+    fig1,
     xaxis = list(
       title = 'Date',
       range = c(as.numeric(as.POSIXct(fig_min_x))*1000, 
@@ -133,7 +136,8 @@ main <- function(st, fe1, fe2) {
     ),
       annotations=list(list(x=0.40, y = 1.10, text = fe1_nm, showarrow = F, xref='paper', yref='paper'))
   )
-  fig2 <- fig2 %>% layout(
+  fig2 <- layout(
+    fig2,
     xaxis = list(
       title = 'Date',
       range = c(as.numeric(as.POSIXct(fig_min_x, format="%Y/%m/%d"))*1000, 
