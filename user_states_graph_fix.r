@@ -9,7 +9,8 @@ main <- function(fe1, fe2, fig1_nm = "v3/fig1.rds", fig2_nm = "v3/fig2.rds") {
 
   fig <- subplot(fig1, fig2, shareX=TRUE)
 
-  fig <- fig %>% layout(
+  fig <- layout(
+      fig,
       legend=list(orientation='h',
                   yanchor='bottom',
                   y=1.12,
@@ -24,12 +25,14 @@ main <- function(fe1, fe2, fig1_nm = "v3/fig1.rds", fig2_nm = "v3/fig2.rds") {
       height=550,
       width=1400)
 
-  fig <- fig %>% animation_opts(
+  fig <- animation_opts(
+    fig,
     frame = 1, 
     transition = 0, 
     redraw = FALSE
   )
-  fig <- fig %>% animation_slider(
+  fig <- animation_slider(
+    fig,
     currentvalue = list(prefix = 'Date: ', font = list(size=12), visible=TRUE, xanchor='right'),
     yanchor = 'top',
     xanchor = 'left',
@@ -37,8 +40,8 @@ main <- function(fe1, fe2, fig1_nm = "v3/fig1.rds", fig2_nm = "v3/fig2.rds") {
     x = 0.075,
     y = -0.17,
   )
-  fig <- fig %>% animation_button(
-    x=0, xanchor="left", y=-0.48, yanchor="bottom"
+  fig <- animation_button(
+    fig, x=0, xanchor="left", y=-0.48, yanchor="bottom"
   )
 
   saveWidget(fig, 'v3/static/animations/graphtest_final.html', selfcontained = F, libdir = 'lib')
