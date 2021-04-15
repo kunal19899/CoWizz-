@@ -108,8 +108,15 @@ main <- function(st, fe1, fe2) {
       frame = ~frame,
       type = 'scatter',
       mode = 'lines',
-      line = list(simplyfy = F,
-                  color=color_opts[which(st == ~State)]),
+      text = paste("<b>", fig$State,
+                  "</b><br><br><b> Date :</b> ", fig$Date,
+                  "<br><b>", fe1_nm,
+                  ":</b> ", fig[[fe1]]),
+      hoverinfo = 'text',
+      hoverlabel = list(align='left'),
+      color = ~Colors,
+      name = ~State,
+      line = list(simplyfy = F),
       legendgroup=~State
       #legendgroup=DEFAULT_PLOTLY_COLORS[which(st == ~State) - length(st)]
     )
@@ -122,9 +129,15 @@ main <- function(st, fe1, fe2) {
       frame = ~frame,
       type = 'scatter',
       mode = 'lines',
-      line = list(simplyfy = F,
-                  #color=DEFAULT_PLOTLY_COLORS[which(st == ~State)])
-                  color=color_opts[which(st == ~State)]),
+      text = paste("<b>", fig$State,
+                  "</b><br><br><b> Date :</b> ", fig$Date,
+                  "<br><b>", fe2_nm,
+                  ":</b> ", fig[[fe2]]),
+      hoverinfo = 'text',
+      hoverlabel = list(align='left'),
+      color = ~Colors,
+      name = ~State,
+      line = list(simplyfy = F),
       legendgroup=~State,
       showlegend=FALSE
     )
@@ -133,12 +146,16 @@ main <- function(st, fe1, fe2) {
       title = 'Date',
       #range = c(as.numeric(as.POSIXct(fig_min_x, format="%Y/%m/%d"))*1000,
       #          as.numeric(as.POSIXct(fig_max_x, format="%Y/%m/%d"))*1000),
-      zeroline = F
+      zeroline = F,
+      autorange = TRUE,
+      dtick="M1",
+      tickformat="%b\n%Y"
     ),
     yaxis = list(
       zeroline = F,
       range = c(fig1_min_y, fig1_max_y)
-    )
+    ),
+    annotations=list(list(x=0.40, y = 1.10, text = fe1_nm, showarrow = F, xref='paper', yref='paper'))
   )
   fig2 <- layout(fig2,
     xaxis = list(
@@ -146,11 +163,15 @@ main <- function(st, fe1, fe2) {
       #range = c(as.numeric(as.POSIXct(fig_min_x, format="%Y/%m/%d"))*1000,
       #          as.numeric(as.POSIXct(fig_max_x, format="%Y/%m/%d"))*1000),
       zeroline = F,
+      autorange = TRUE,
+      dtick="M1",
+      tickformat="%b\n%Y"
     ),
     yaxis = list(
-      zeroline = F
+      zeroline = F,
       range = c(fig2_min_y, fig2_max_y)
-    )
+    ),
+    annotations=list(list(x=0.55, y = 1.10, text = fe2_nm, showarrow = F, xref='paper', yref='paper'))
   )
 
   # save both graphs as R object files to be later opened by user_states_graph_fix.r

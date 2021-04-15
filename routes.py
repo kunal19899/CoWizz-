@@ -67,7 +67,7 @@ def animate():
             string = f.read()
         print(string)
 
-        compute = STAP(string, "compute") # stores the information for the 'main' function in 'feature_graph_v4.R' in variable 'main'
+        compute = STAP(string, "main") # stores the information for the 'main' function in 'feature_graph_v4.R' in variable 'main'
 
         result1 = compute.main(stateList, feature1, feature2) # calls the 'main' function with appropriate arguments | compute.main() ==> variable.function_name()
 
