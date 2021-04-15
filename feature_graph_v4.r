@@ -43,7 +43,7 @@ main <- function(st, fe1, fe2) {
   df <- read.csv(file = '/Users/kunalsamant/Documents/UTA/ITLab/COVID-19 visualisation/v3/Feb20-USStates-CovidData.csv')
 
   # obtain the fixed names of the features
-  features_df <- read.csv(file = 'features.csv')
+  features_df <- read.csv(file = '/Users/kunalsamant/Documents/UTA/ITLab/COVID-19 visualisation/v3/features.csv')
   fe1_nm <- features_df[which(fe1 == features_df[1]), 2]
   fe2_nm <- features_df[which(fe2 == features_df[1]), 2]
 
