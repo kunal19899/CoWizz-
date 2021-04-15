@@ -45,7 +45,7 @@ main <- function(st, fe1, fe2) {
   # condense the graph to only include the columns we want and the rows we want
   #      ROWS: all instances of rows where the State column aligns with the state in the st set
   #      COLS: the State, Date, and rows related to feature 1 and feature 2
-  df_sub <- df %>% subset(State %in% st, select=c(State,Date,get(fe1),get(fe2)))
+  df_sub <- subset(df, State %in% st, select=c(State,Date,get(fe1),get(fe2)))
 
   # replace any null values with zero in the feature columns
   df_sub[[fe1]][is.na(df_sub[[fe1]])] <- 0
@@ -74,7 +74,7 @@ main <- function(st, fe1, fe2) {
   df_sub$Colors <- colors_col
 
   # creates a cumulative graph that the plots can be animated by
-  fig <- df_sub %>% accumulate_by(~Date)
+  fig <- accumulate_by(df_sub, ~Date)
 
   # sets the minimum and maximum x axis values
   fig_min_x <- df_sub[1,2]
