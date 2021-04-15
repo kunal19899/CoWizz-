@@ -86,11 +86,19 @@ main <- function(st, fe1, fe2) {
   # now statically add the column to the data frame
   df_sub$Colors <- colors_col
 
+  # creates a cumulative graph that the plots can be animated by
   fig <- accumulate_by(df_sub, ~Date)
+
+  # sets the minimum and maximum x axis values
   fig_min_x <- df_sub[1,2]
   fig_max_x <- tail(df_sub[,2], n=1)
-  #fig1_min_y <- min(df_sub$get(fe1))
-  #fig1_max_y <- max(df_sub$get(fe1))
+
+  # sets the minimum and maximum y axis values for both graphs
+  fig1_min_y <- min(df_sub[[fe1]])
+  fig1_max_y <- max(df_sub[[fe1]])
+  fig2_min_y <- min(df_sub[[fe2]])
+  fig2_max_y <- max(df_sub[[fe2]])
+
   fig1 <-
     plot_ly(
       fig,
