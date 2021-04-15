@@ -17,7 +17,7 @@ accumulate_by <- function(dat, var) {
   var <- lazyeval::f_eval(var, dat)
   lvls <- plotly:::getLevels(var)
   dats <- lapply(seq_along(lvls), function(x) {
-    cbind(dat[var %in% lvls[seq(1, x)], ], frame = lvls[[x]])
+    cbind(dat[var %in% lvls[seq(1, x)], ], frame = paste(lvls[[x]]))
   })
   dplyr::bind_rows(dats)
 }
@@ -68,6 +68,23 @@ main <- function(st, fe1, fe2) {
 
   # convert it back to a Date object so we can edit the range of the axis
   df_sub$Date <- as.Date(df_sub$Date)
+
+  nDays <- length(unique(df_sub$Date))
+
+  # add a new column to the data frame that include the hex number of the state's line color
+  colors_col <- rep(color_opts[1], nDays)
+
+  # do the same process above for the rest of the states that are picked by the user
+  if(length(st) > 1) {
+    rest_colors <- color_opts[2:length(st)]
+
+    for(i in rest_colors) {
+      colors_col <- append(colors_col, rep(i, nDays))
+    }
+  }
+
+  # now statically add the column to the data frame
+  df_sub$Colors <- colors_col
 
   fig <- accumulate_by(df_sub, ~Date)
   fig_min_x <- df_sub[1,2]
