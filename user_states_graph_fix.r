@@ -23,17 +23,18 @@ main <- function(fe1, fe2, fig1_nm = "v3/fig1.rds", fig2_nm = "v3/fig2.rds") {
       showlegend=TRUE,
       autosize = FALSE,
       height=550,
-      width=1400)
+      width=1400
+  )
 
   fig <- animation_opts(
     fig,
     frame = 1, 
     transition = 0, 
-    redraw = FALSE
+    redraw = TRUE
   )
   fig <- animation_slider(
     fig,
-    currentvalue = list(prefix = 'Date: ', font = list(size=12), visible=TRUE, xanchor='right'),
+    currentvalue = list(prefix = 'Date: ', font = list(size=16), visible=TRUE, xanchor='right'),
     yanchor = 'top',
     xanchor = 'left',
     len = 0.9,
