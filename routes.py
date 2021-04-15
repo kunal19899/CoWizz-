@@ -11,7 +11,7 @@ import pandas as pd
 import rpy2.robjects as robjects
 from rpy2.robjects.packages import importr
 from rpy2.robjects import pandas2ri
-from rpy2.robjects.packages import STAP
+from rpy2.robjects.packages import SignatureTranslatedAnonymousPackage as STAP
 
 # FUNCTION RUNS WHEN THE BASE HOST IS CALLED WITH THE '/' EXTENTION, e.g. https://localhost:5000/
 @app.route("/")
@@ -65,8 +65,9 @@ def animate():
         # reads the 'feature_graph_v4.R' file and stores the information into 'string'
         with open('/Users/kunalsamant/Documents/UTA/ITLab/COVID-19 visualisation/v3/feature_graph_v4.R', 'r') as f:
             string = f.read()
+        print(string)
 
-        compute = STAP(string, "main") # stores the information for the 'main' function in 'feature_graph_v4.R' in variable 'main'
+        compute = STAP(string, "compute") # stores the information for the 'main' function in 'feature_graph_v4.R' in variable 'main'
 
         result1 = compute.main(stateList, feature1, feature2) # calls the 'main' function with appropriate arguments | compute.main() ==> variable.function_name()
 
@@ -75,7 +76,7 @@ def animate():
         with open('/Users/kunalsamant/Documents/UTA/ITLab/COVID-19 visualisation/v3/user_states_graph_fix.R', 'r') as f:
             string = f.read()
         
-        display = STAP(string, "main") # stores the information for the 'main' function in ''user_states_graph_fix.R' in variable 'display'
+        display = STAP(string, "display") # stores the information for the 'main' function in ''user_states_graph_fix.R' in variable 'display'
 
         result2 = display.main(features[feature1], features[feature2]) # calls the 'main' function with appropriate arguments | display.main() ==> variable.function_name()
         
