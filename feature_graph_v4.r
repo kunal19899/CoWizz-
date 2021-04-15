@@ -26,20 +26,49 @@ accumulate_by <- function(dat, var) {
 main <- function(st, fe1, fe2) {
   # hardcoded values for the states and features we want
   #st <- c('Texas', 'Florida', 'New Jersey','Illinois','New Hampshire')
-  start.time <- Sys.time()
   # st <- c('Texas', 'Florida', 'New York', 'California', 'Missouri')
   # fe1 <- 'grocery_and_pharmacy_percent_change_from_baseline'
   # fe2 <- 'workplaces_percent_change_from_baseline'
 
+  start.time <- Sys.time()
+
+  # condense the color_opts array to only include the number of colors that
+  #     correlates to the number states
+  color_opts <- color_opts[1:length(st)] 
+
+  # set names to map the colors of the lines to the state names
+  color_opts <- setNames(color_opts, st)
+
   # retrieve values from the COVID csv file
   df <- read.csv(file = '/Users/kunalsamant/Documents/UTA/ITLab/COVID-19 visualisation/v3/Feb20-USStates-CovidData.csv')
 
+  # obtain the fixed names of the features
+  features_df <- read.csv(file = 'features.csv')
+  fe1_nm <- features_df[which(fe1 == features_df[1]), 2]
+  fe2_nm <- features_df[which(fe2 == features_df[1]), 2]
+
   # store list of all the days each state covers
-  dayList <- unique(df$Date)
+  #dayList <- unique(df$Date)
   # change format of dates from a Date object mm-dd-yy to a String object yyyy-mm-dd
-  df$Date <- strptime(as.character(df$Date), '%m/%d/%y')
-  df$Date <- format(df$Date, '%Y/%m/%d')
+  #df$Date <- strptime(as.character(df$Date), '%m/%d/%y')
+  #df$Date <- format(df$Date, '%Y/%m/%d')
+
+  # condense the graph to only include the columns we want and the rows we want
+  #      ROWS: all instances of rows where the State column aligns with the state in the st set
+  #      COLS: the State, Date, and rows related to feature 1 and feature 2
   df_sub <- subset(df, State %in% st, select=c(State,Date,get(fe1),get(fe2)))
+
+  # replace any null values with zero in the feature columns
+  df_sub[[fe1]][is.na(df_sub[[fe1]])] <- 0
+  df_sub[[fe2]][is.na(df_sub[[fe2]])] <- 0
+
+  # change format of dates from a Date object mm-dd-yy to a String object yyyy-mm-dd
+  df_sub$Date <- strptime(as.character(df_sub$Date), '%m/%d/%y')
+  df_sub$Date <- format(df_sub$Date, '%Y/%m/%d')
+
+  # convert it back to a Date object so we can edit the range of the axis
+  df_sub$Date <- as.Date(df_sub$Date)
+
   fig <- accumulate_by(df_sub, ~Date)
   fig_min_x <- df_sub[1,2]
   fig_max_x <- tail(df_sub[,2], n=1)
@@ -104,3 +133,5 @@ main <- function(st, fe1, fe2) {
   time.taken <- end.time - start.time
   print(time.taken)
 }
+
+print('main has been called.')
