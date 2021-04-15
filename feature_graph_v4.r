@@ -108,10 +108,8 @@ main <- function(st, fe1, fe2) {
       frame = ~frame,
       type = 'scatter',
       mode = 'lines',
-      hoverlabel = list(align='left'),
-      color = ~Colors,
-      name = ~State,
-      line = list(simplyfy = F),
+      line = list(simplyfy = F,
+                  color=color_opts[which(st == ~State)]),
       legendgroup=~State
       #legendgroup=DEFAULT_PLOTLY_COLORS[which(st == ~State) - length(st)]
     )
