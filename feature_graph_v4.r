@@ -1,11 +1,18 @@
 library(plotly)
 
 # list of default Plotly colors to color a trace with
-DEFAULT_PLOTLY_COLORS=c('rgb(31, 119, 180)', 'rgb(255, 127, 14)',
-                        'rgb(44, 160, 44)', 'rgb(214, 39, 40)',
-                        'rgb(148, 103, 189)', 'rgb(140, 86, 75)',
-                        'rgb(227, 119, 194)', 'rgb(127, 127, 127)',
-                        'rgb(188, 189, 34)', 'rgb(23, 190, 207)')
+#DEFAULT_PLOTLY_COLORS=c('rgb(31, 119, 180)', 'rgb(255, 127, 14)',
+#                        'rgb(44, 160, 44)', 'rgb(214, 39, 40)',
+#                        'rgb(148, 103, 189)', 'rgb(140, 86, 75)',
+#                        'rgb(227, 119, 194)', 'rgb(127, 127, 127)',
+#                        'rgb(188, 189, 34)', 'rgb(23, 190, 207)')
+
+color_opts <- c('#1f77b4', # blue
+                '#ff7f0e', # orange
+                '#2ca02c', # green
+                '#d62728', # red
+                '#9467bd') # purple
+
 accumulate_by <- function(dat, var) {
   var <- lazyeval::f_eval(var, dat)
   lvls <- plotly:::getLevels(var)
@@ -48,7 +55,7 @@ main <- function(st, fe1, fe2) {
       type = 'scatter',
       mode = 'lines',
       line = list(simplyfy = F,
-                  color=DEFAULT_PLOTLY_COLORS[which(st == ~State)]),
+                  color=color_opts[which(st == ~State)]),
       legendgroup=~State
       #legendgroup=DEFAULT_PLOTLY_COLORS[which(st == ~State) - length(st)]
     )
@@ -63,7 +70,7 @@ main <- function(st, fe1, fe2) {
       mode = 'lines',
       line = list(simplyfy = F,
                   #color=DEFAULT_PLOTLY_COLORS[which(st == ~State)])
-                  color=DEFAULT_PLOTLY_COLORS[which(st == ~State)]),
+                  color=color_opts[which(st == ~State)]),
       legendgroup=~State,
       showlegend=FALSE
     )
